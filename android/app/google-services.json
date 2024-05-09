@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1080977743420",
+    "project_id": "sjym-app",
+    "storage_bucket": "sjym-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1080977743420:android:3a1bbea0a62684f09f6d39",
+        "android_client_info": {
+          "package_name": "com.example.sjym_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6Z8oQXPZnZ2UXCuu3QKFI6Si0PtvvKTw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
