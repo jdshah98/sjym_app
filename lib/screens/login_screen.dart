@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:sjym_app/screens/home_screen.dart';
+import 'package:sjym_app/utils/constants.dart';
+
+import '../utils/assets.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,9 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final Orientation orientation = MediaQuery.of(context).orientation;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Saurashtra Jain Yuvak Mandal"),
-      ),
+      appBar: AppBar(title: const Text(Constants.appName)),
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -35,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Center(
                   child: ClipOval(
                     child: Image(
-                      image: const AssetImage("assets/logo.png"),
+                      image: const AssetImage(Assets.logo),
                       width: orientation == Orientation.portrait ? width * 0.55 : height * 0.5,
                       height: orientation == Orientation.portrait ? width * 0.55 : height * 0.5,
                     ),
@@ -43,10 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: TextFormField(
                   keyboardType: TextInputType.number,
                   inputFormatters: [
@@ -69,10 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: TextFormField(
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: !_showPassword,
@@ -99,18 +96,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
               ),
-              const Align(
+              Align(
                 alignment: Alignment.centerRight,
                 child: Padding(
-                  padding: EdgeInsets.only(right: 12),
+                  padding: const EdgeInsets.only(right: 12),
                   child: TextButton(
                     onPressed: null,
-                    child: Text("FORGOT PASSWORD?"),
+                    child: Text(
+                      "FORGOT PASSWORD?",
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: ElevatedButton.icon(
                   onPressed: _login,
                   style: ElevatedButton.styleFrom(
@@ -121,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   icon: const Icon(Icons.login),
                   label: const Text(
-                    "LOGIN",
+                    "login",
                     style: TextStyle(fontSize: 16),
                   ),
                 ),
@@ -142,5 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     final mobileNumber = _mobileNumberController.value.text;
     final password = _passwordController.value.text;
+
+    Get.to(const HomeScreen());
   }
 }

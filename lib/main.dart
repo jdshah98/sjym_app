@@ -1,8 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:sjym_app/features/auth/login_screen.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:sjym_app/utils/constants.dart';
 
 import 'firebase_options.dart';
+import 'screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,7 +14,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]).then((_) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -20,13 +25,31 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Saurashtra Jain Yuvak Mandal',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const LoginScreen(),
+    return GetMaterialApp(
+      title: Constants.appName,
+      theme: theme,
+      debugShowCheckedModeBanner: false,
+      home: const SplashScreen(),
     );
   }
 }
+
+ThemeData theme = ThemeData(
+  colorScheme: const ColorScheme.light(),
+  appBarTheme: const AppBarTheme(
+    backgroundColor: Color(0xff6200ee),
+    foregroundColor: Colors.white,
+  ),
+  elevatedButtonTheme: const ElevatedButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: WidgetStatePropertyAll(Color(0xff6200ee)),
+      foregroundColor: WidgetStatePropertyAll(Colors.white),
+    ),
+  ),
+  iconButtonTheme: const IconButtonThemeData(
+    style: ButtonStyle(
+      foregroundColor: WidgetStatePropertyAll(Color(0xff6200ee)),
+    ),
+  ),
+  useMaterial3: true,
+);
