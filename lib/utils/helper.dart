@@ -1,9 +1,14 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 class Helper {
   static String getString(Map<String, dynamic> map, String key, {String defaultValue = ""}) => map[key] ?? defaultValue;
 
   static int? getInt(Map<String, dynamic> map, String key, {int? defaultValue}) => map[key] ?? defaultValue;
 
   static bool getBool(Map<String, dynamic> map, String key, {bool defaultValue = false}) => map[key] ?? defaultValue;
+
+  static Uint8List decodeImage(String base64String) => base64.decode(base64String);
 
   static bool isExpired(int microseconds) {
     DateTime now = DateTime.now();

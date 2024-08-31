@@ -44,7 +44,7 @@ class AdvertisementService {
           );
 
           if (taskSnapshot.state == TaskState.success) {
-            _getStorage.write(Keys.advertisement, advertisement);
+            _getStorage.write(Keys.advertisement, advertisement.toMap());
 
             return localPath;
           }

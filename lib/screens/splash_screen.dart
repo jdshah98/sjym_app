@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:sjym_app/screens/advertisement_screen.dart';
 
 import '../utils/assets.dart';
-import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

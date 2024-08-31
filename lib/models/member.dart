@@ -81,4 +81,9 @@ class Member extends Entity {
         Keys.profile: profile.toMap(),
         Keys.lastUpdated: lastUpdated
       };
+
+  @override
+  String toString() {
+    return toMap().toString();
+  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:sjym_app/models/member.dart';
 import 'package:sjym_app/utils/keys.dart';
 import 'package:sjym_app/widgets/loading_dialog.dart';
 import '../models/login_request.dart';
@@ -155,8 +156,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
     AuthService().login(LoginRequest(mobileNumber, password)).then((result) {
       if (!result.isError) {
-        _getStorage.write(Keys.loggedInStatus, true);
-        _getStorage.write(Keys.loggedInMember, result.data);
+        Member? member = result.data;
+        if (member != null) {
+          _getStorage.write(Keys.loggedInStatus, true);
+          _getStorage.write(Keys.loggedInMember, member.toMap());
+        }
 
         Get.offAll(() => const HomeScreen());
       } else {
