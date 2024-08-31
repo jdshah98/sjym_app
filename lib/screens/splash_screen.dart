@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sjym_app/screens/advertisement_screen.dart';
 
 import '../utils/assets.dart';
 import 'login_screen.dart';
@@ -19,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // Splash Screen Timer
     Future.delayed(
       const Duration(seconds: 3),
-      () => Get.off(() => const LoginScreen()),
+      () => Get.off(() => const AdvertisementScreen()),
     );
 
     return Scaffold(

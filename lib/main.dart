@@ -2,7 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:sjym_app/utils/constants.dart';
+import 'package:get_storage/get_storage.dart';
+import 'utils/app_colors.dart';
+import 'utils/constants.dart';
 
 import 'firebase_options.dart';
 import 'screens/splash_screen.dart';
@@ -13,6 +15,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await GetStorage.init(Constants.userContainer);
+  await GetStorage.init(Constants.cacheContainer);
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -37,18 +42,18 @@ class MyApp extends StatelessWidget {
 ThemeData theme = ThemeData(
   colorScheme: const ColorScheme.light(),
   appBarTheme: const AppBarTheme(
-    backgroundColor: Color(0xff6200ee),
+    backgroundColor: AppColors.primaryColor,
     foregroundColor: Colors.white,
   ),
   elevatedButtonTheme: const ElevatedButtonThemeData(
     style: ButtonStyle(
-      backgroundColor: WidgetStatePropertyAll(Color(0xff6200ee)),
+      backgroundColor: WidgetStatePropertyAll(AppColors.primaryColor),
       foregroundColor: WidgetStatePropertyAll(Colors.white),
     ),
   ),
   iconButtonTheme: const IconButtonThemeData(
     style: ButtonStyle(
-      foregroundColor: WidgetStatePropertyAll(Color(0xff6200ee)),
+      foregroundColor: WidgetStatePropertyAll(AppColors.primaryColor),
     ),
   ),
   useMaterial3: true,
