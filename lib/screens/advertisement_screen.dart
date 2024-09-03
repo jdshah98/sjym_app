@@ -23,7 +23,7 @@ class AdvertisementScreen extends StatefulWidget {
 class _AdvertisementScreenState extends State<AdvertisementScreen> {
   static const int _timeout = 10;
   bool _isLoaded = false;
-  String _advertisementPath = "";
+  String _advertisementPath = '';
 
   Timer? _timer;
 
@@ -34,7 +34,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
     AdvertisementService().getWelcomeAdvertisementPath().then((result) {
       if (mounted) {
         setState(() {
-          _advertisementPath = result ?? "";
+          _advertisementPath = result ?? '';
           _isLoaded = true;
         });
 
@@ -45,7 +45,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
         });
       }
     }).catchError((err) {
-      debugPrint("Error: ${err.toString()}");
+      debugPrint('Error: ${err.toString()}');
       log(err.toString(), error: err, name: runtimeType.toString());
       _navigateToNextScreen();
     });
@@ -54,7 +54,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
   @override
   Widget build(BuildContext context) {
     if (!_isLoaded) {
-      return const LoadingWidget(text: "Loading...");
+      return const LoadingWidget(text: 'Loading...');
     }
     return Scaffold(
       body: Center(

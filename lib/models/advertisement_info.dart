@@ -7,7 +7,7 @@ class AdvertisementInfo extends Entity {
   int expiry;
 
   AdvertisementInfo({
-    this.filepath = "",
+    this.filepath = '',
     int? expiry,
   }) : expiry = expiry ?? DateTime(1970).microsecondsSinceEpoch;
 

@@ -98,49 +98,49 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisSpacing: 16,
         mainAxisSpacing: 16,
         children: [
-          _DashboardIcon(
+          _Icon(
             assetImage: Assets.samajInfo,
-            text: "Samaj Info",
+            text: 'Samaj Info',
             onTap: () => Get.to(() => const SamajInfoScreen()),
           ),
-          _DashboardIcon(
+          _Icon(
             assetImage: Assets.committee,
-            text: "Committee",
+            text: 'Committee',
             onTap: () => Get.to(() => const CommitteeScreen()),
           ),
-          _DashboardIcon(
+          _Icon(
             assetImage: Assets.news,
-            text: "News",
+            text: 'News',
             onTap: () => Get.to(() => const NewsScreen()),
           ),
-          _DashboardIcon(
+          _Icon(
             assetImage: Assets.addressBook,
-            text: "Address Book",
+            text: 'Address Book',
             onTap: () => Get.to(() => const AddressBookScreen()),
           ),
-          _DashboardIcon(
+          _Icon(
             assetImage: Assets.events,
-            text: "Events",
+            text: 'Events',
             onTap: () => Get.to(() => const EventsScreen()),
           ),
-          _DashboardIcon(
+          _Icon(
             assetImage: Assets.matrimony,
-            text: "Matrimony",
+            text: 'Matrimony',
             onTap: () => Get.to(() => const MatrimonyScreen()),
           ),
-          _DashboardIcon(
+          _Icon(
             assetImage: Assets.jobs,
-            text: "Jobs",
+            text: 'Jobs',
             onTap: () => Get.to(() => const JobsScreen()),
           ),
-          _DashboardIcon(
+          _Icon(
             assetImage: Assets.bloodBank,
-            text: "Blood Bank",
+            text: 'Blood Bank',
             onTap: () => Get.to(() => const BloodBankScreen()),
           ),
-          _DashboardIcon(
+          _Icon(
             assetImage: Assets.contacts,
-            text: "Contact Us",
+            text: 'Contact Us',
             onTap: () => Get.to(() => const ContactUsScreen()),
           ),
         ],
@@ -157,28 +157,28 @@ class _HomeScreenState extends State<HomeScreen> {
     return [
       PopupMenuItem<int>(
         value: 1,
-        child: Text("Profile", style: menuItemTextStyle),
+        child: Text('Profile', style: menuItemTextStyle),
       ),
       if (_loggedInMember!.isAdmin) ...[
         PopupMenuItem<int>(
           value: 2,
-          child: Text("Admin Panel", style: menuItemTextStyle),
+          child: Text('Admin Panel', style: menuItemTextStyle),
         ),
       ],
       PopupMenuItem<int>(
         value: 3,
-        child: Text("About App", style: menuItemTextStyle),
+        child: Text('About App', style: menuItemTextStyle),
       ),
       PopupMenuItem<int>(
         value: 4,
-        child: Text("Logout", style: menuItemTextStyle),
+        child: Text('Logout', style: menuItemTextStyle),
       ),
     ];
   }
 }
 
-class _DashboardIcon extends StatelessWidget {
-  const _DashboardIcon({
+class _Icon extends StatelessWidget {
+  const _Icon({
     required this.assetImage,
     required this.text,
     this.onTap,

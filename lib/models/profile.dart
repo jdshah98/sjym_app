@@ -17,17 +17,17 @@ class Profile extends Entity {
   int? dob;
 
   Profile({
-    this.mobileNumber = "",
-    this.address = "",
-    this.thumbnail = "",
-    this.profilePic = "",
-    this.mainCommitteeDesignation = "",
-    this.yuvaCommitteeDesignation = "",
-    this.email = "",
-    this.education = "",
-    this.occupation = "",
-    this.officeAddress = "",
-    this.officeContact = "",
+    this.mobileNumber = '',
+    this.address = '',
+    this.thumbnail = '',
+    this.profilePic = '',
+    this.mainCommitteeDesignation = '',
+    this.yuvaCommitteeDesignation = '',
+    this.email = '',
+    this.education = '',
+    this.occupation = '',
+    this.officeAddress = '',
+    this.officeContact = '',
   });
 
   static Profile fromMap(Map<String, dynamic>? map) {

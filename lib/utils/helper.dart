@@ -1,8 +1,25 @@
 import 'dart:convert';
+import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
+
 class Helper {
-  static String getString(Map<String, dynamic> map, String key, {String defaultValue = ""}) => map[key] ?? defaultValue;
+  static final Random random = Random();
+
+  static const List<Color> cardColors = [
+    Colors.red,
+    Colors.teal,
+    Colors.pink,
+    Colors.green,
+    Colors.purple,
+    Colors.blue,
+    Colors.indigo,
+  ];
+
+  static Color getRandomColor() => cardColors[random.nextInt(cardColors.length)];
+
+  static String getString(Map<String, dynamic> map, String key, {String defaultValue = ''}) => map[key] ?? defaultValue;
 
   static int? getInt(Map<String, dynamic> map, String key, {int? defaultValue}) => map[key] ?? defaultValue;
 

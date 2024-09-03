@@ -7,7 +7,7 @@ class Name extends Entity {
   String middleName;
   String lastName;
 
-  Name({this.firstName = "", this.middleName = "", this.lastName = ""});
+  Name({this.firstName = '', this.middleName = '', this.lastName = ''});
 
   static Name fromMap(Map<String, dynamic>? map) {
     final Name name = Name();
@@ -27,5 +27,5 @@ class Name extends Entity {
       };
 
   @override
-  String toString() => "$firstName $middleName $lastName".replaceAll(RegExp(r"\s+"), " ").trim();
+  String toString() => '$firstName $middleName $lastName'.replaceAll(RegExp(r'\s+'), ' ').trim();
 }

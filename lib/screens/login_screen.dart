@@ -149,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    Get.dialog(const LoadingDialog(text: "Logging In..."));
+    Get.dialog(const LoadingDialog(text: 'Logging In...'));
 
     final mobileNumber = _mobileNumberController.value.text;
     final password = _passwordController.value.text;

@@ -9,7 +9,7 @@ class StorageProvider {
 
   factory StorageProvider() => _instance;
 
-  final Reference _ref = FirebaseStorage.instance.ref("advertisement");
+  final Reference _ref = FirebaseStorage.instance.ref('advertisement');
 
   Future<TaskSnapshot> uploadAdvertisment(String filepath, File file) async {
     UploadTask uploadTask = _ref.child(filepath).putFile(file);

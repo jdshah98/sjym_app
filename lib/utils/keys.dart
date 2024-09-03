@@ -43,8 +43,22 @@ class Keys {
   static const String filepath = 'filepath';
   static const String expiry = 'expiry';
 
+  /// Address Statistics
+  static const String familyCount = 'family';
+  static const String familyMemberCount = 'family_member';
+
   /// GetStorage UserContainer
-  static const String loggedInStatus = "LOGGED_IN_STATUS";
+  static const String loggedInStatus = 'LOGGED_IN_STATUS';
   static const String loggedInMember = 'LOGGED_IN_MEMBER';
-  static const String advertisement = "ADVERTISEMENT";
+
+  /// GetStorage CacheContainer
+  static const String advertisement = 'ADVERTISEMENT';
+  static const String mainCommitteeMembers = 'MAIN_COMMITTEE_MEMBERS';
+  static const String mainCommitteeMembersExpiry = 'MAIN_COMMITTEE_MEMBERS_EXPIRY';
+  static const String yuvaCommitteeMembers = 'YUVA_COMMITTEE_MEMBERS';
+  static const String yuvaCommitteeMembersExpiry = 'YUVA_COMMITTEE_MEMBERS_EXPIRY';
+
+  /// GetStorage InMemoryContainer
+  static const String areaStatistics = 'AREA_STAT';
+  static const String nativePlaceStatistics = 'NATIVE_STAT';
 }

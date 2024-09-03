@@ -8,9 +8,9 @@ class AdvertisementRepository {
 
   factory AdvertisementRepository() => _instance;
 
-  final CollectionReference<Map<String, dynamic>> _ref = FirebaseFirestore.instance.collection("advertisement");
+  final CollectionReference<Map<String, dynamic>> _ref = FirebaseFirestore.instance.collection('advertisement');
 
-  final String _docId = "jpqnkLBZqS5cVcMpOE6X";
+  final String _docId = 'jpqnkLBZqS5cVcMpOE6X';
 
   Future<Advertisement?> getAdvertisement() async {
     final DocumentSnapshot<Map<String, dynamic>> snapshot = await _ref.doc(_docId).get();

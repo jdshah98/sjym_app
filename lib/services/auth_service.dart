@@ -16,8 +16,8 @@ class AuthService {
   Future<ApiResponse<Member?>> login(LoginRequest loginRequest) async {
     Member? member = await MemberRepository().findByUsername(loginRequest.username);
     if (member == null || member.password != loginRequest.password) {
-      log("Invalid Username or Password!!");
-      return ApiResponse(message: "Invalid Username or Password!!", isError: true);
+      log('Invalid Username or Password!!');
+      return ApiResponse(message: 'Invalid Username or Password!!', isError: true);
     }
     return ApiResponse(data: member);
   }

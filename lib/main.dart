@@ -18,6 +18,7 @@ void main() async {
 
   await GetStorage.init(Constants.userContainer);
   await GetStorage.init(Constants.cacheContainer);
+  await GetStorage.init(Constants.memoryContainer);
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

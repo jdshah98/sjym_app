@@ -49,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  "Developed By Jainam Shah",
+                  'Developed By Jainam Shah',
                   textScaler: MediaQuery.of(context).textScaler,
                   style: Theme.of(context).primaryTextTheme.bodyLarge,
                 ),

@@ -1,3 +1,4 @@
+import 'package:sjym_app/models/committee_type.dart';
 import 'package:sjym_app/utils/helper.dart';
 
 import 'entity.dart';
@@ -24,22 +25,27 @@ class Member extends Entity {
   int? lastUpdated;
 
   Member({
-    this.uid = "",
-    this.familyId = "",
-    this.username = "",
-    this.password = "",
+    this.uid = '',
+    this.familyId = '',
+    this.username = '',
+    this.password = '',
     this.isAdmin = false,
-    this.area = "",
-    this.nativePlace = "",
-    this.gender = "",
+    this.area = '',
+    this.nativePlace = '',
+    this.gender = '',
     this.isMarried = false,
     this.showInMatrimony = false,
-    this.committeeType = "",
-    this.bloodGroup = "",
+    this.committeeType = '',
+    this.bloodGroup = '',
     Name? name,
     Profile? profile,
   })  : name = name ?? Name(),
         profile = profile ?? Profile();
+
+  String getCommitteeDesignation(CommitteeType committeeType) =>
+      committeeType == CommitteeType.main ? profile.mainCommitteeDesignation : profile.yuvaCommitteeDesignation;
+
+  String getAddress() => profile.address.isNotEmpty ? profile.address : "NA";
 
   static Member fromMap(Map<String, dynamic>? map) {
     final Member member = Member();
