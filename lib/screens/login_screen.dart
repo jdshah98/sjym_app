@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sjym_app/models/member.dart';
+import 'package:sjym_app/utils/app_colors.dart';
 import 'package:sjym_app/utils/keys.dart';
 import 'package:sjym_app/widgets/loading_dialog.dart';
 import '../models/login_request.dart';
@@ -101,16 +102,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
               ),
-              Align(
+              const Align(
                 alignment: Alignment.centerRight,
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 12),
+                  padding: EdgeInsets.only(right: 12),
                   child: TextButton(
                     onPressed: null,
                     child: Text(
                       'FORGOT PASSWORD?',
                       style: TextStyle(
-                        color: Theme.of(context).primaryColor,
+                        color: AppColors.primaryColor,
                       ),
                     ),
                   ),
@@ -169,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(result.message),
-            backgroundColor: Theme.of(context).colorScheme.error,
+            backgroundColor: Colors.red,
             duration: const Duration(seconds: 2),
           ));
         }

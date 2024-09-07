@@ -149,9 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<PopupMenuEntry> actionItemBuilder(BuildContext context) {
-    TextStyle menuItemTextStyle = TextStyle(
+    TextStyle menuItemTextStyle = const TextStyle(
       fontSize: 18,
-      color: Theme.of(context).colorScheme.primary,
+      color: AppColors.primaryColor,
       fontWeight: FontWeight.normal,
     );
     return [

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sjym_app/models/address_statistics.dart';
 import 'package:sjym_app/models/family_stat.dart';
-import 'package:sjym_app/screens/components/member_list_view.dart';
+import 'package:sjym_app/screens/components/paged_member_list_view.dart';
 import 'package:sjym_app/screens/components/statistics_card.dart';
 import 'package:sjym_app/services/address_service.dart';
 import 'package:sjym_app/services/member_service.dart';
@@ -43,7 +43,7 @@ class NativeGridView extends StatelessWidget {
     );
   }
 
-  void _loadMembersByNative(String native) => Get.to(() => MemberListView(
+  void _loadMembersByNative(String native) => Get.to(() => PagedMemberListView(
         function: MemberService().getMembersByNativePlace,
         searchParam: native,
       ));

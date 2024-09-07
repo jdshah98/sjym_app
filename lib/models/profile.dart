@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 import 'entity.dart';
 import '../utils/helper.dart';
 import '../utils/keys.dart';
@@ -29,6 +31,9 @@ class Profile extends Entity {
     this.officeAddress = '',
     this.officeContact = '',
   });
+
+  String getDateOfBirth() =>
+      dob != null ? DateFormat("dd-MM-yyyy").format(DateTime.fromMicrosecondsSinceEpoch(dob!)) : "NA";
 
   static Profile fromMap(Map<String, dynamic>? map) {
     final Profile profile = Profile();

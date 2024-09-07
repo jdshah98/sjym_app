@@ -61,4 +61,5 @@ class Keys {
   /// GetStorage InMemoryContainer
   static const String areaStatistics = 'AREA_STAT';
   static const String nativePlaceStatistics = 'NATIVE_STAT';
+  static const String familyMember = 'FAMILY_MEMBER';
 }

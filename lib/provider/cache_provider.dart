@@ -79,6 +79,18 @@ class CacheProvider {
     return null;
   }
 
+  void setFamilyMembers(List<Member> familyMembers, String familyId) {
+    _cache.writeInMemory("${Keys.familyMember}_$familyId", familyMembers.map((e) => e.toMap()).toList());
+  }
+
+  List<Member> getFamilyMembers(String familyId) {
+    List<dynamic>? cachedValue = _cache.read<List<dynamic>>("${Keys.familyMember}_$familyId");
+    if (cachedValue != null) {
+      return cachedValue.map((e) => Member.fromMap(e as Map<String, dynamic>)).toList();
+    }
+    return [];
+  }
+
   /// private methods
   String _getCommitteeMembersKeyByType(CommitteeType committeeType) =>
       committeeType == CommitteeType.main ? Keys.mainCommitteeMembers : Keys.yuvaCommitteeMembers;

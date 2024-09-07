@@ -68,6 +68,41 @@ class MemberRepository {
     return _getMemberList(querySnapshot);
   }
 
+  Future<List<Member>> findUsersByParams(String? name, String? area, String? nativePlace) async {
+    if (name == null && area == null && nativePlace == null) {
+      throw Exception("Invalid Search Criteria!!");
+    }
+
+    Query<Map<String, dynamic>> query = _ref;
+    if (name != null) {
+      query = query
+          .where(
+            Keys.name,
+            isGreaterThan: name,
+          )
+          .where(Keys.name, isLessThan: "${name}z");
+    }
+    if (area != null) {
+      query = query.where(Keys.area, isEqualTo: area);
+    }
+    if (nativePlace != null) {
+      query = query.where(Keys.nativePlace, isEqualTo: nativePlace);
+    }
+
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await query
+        .orderBy(
+          Keys.name,
+        )
+        .get();
+    return _getMemberList(querySnapshot);
+  }
+
+  Future<List<Member>> findMembersByFamilyId(String familyId) async {
+    final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await _ref.where(Keys.familyId, isEqualTo: familyId).get();
+    return _getMemberList(querySnapshot);
+  }
+
   /// private methods
   List<Member> _getMemberList(QuerySnapshot<Map<String, dynamic>> querySnapshot) {
     List<Member> members = [];

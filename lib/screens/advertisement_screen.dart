@@ -75,7 +75,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
               padding: const EdgeInsets.all(8),
               child: FloatingActionButton.small(
                 onPressed: () => _navigateToNextScreen(),
-                backgroundColor: Theme.of(context).colorScheme.error,
+                backgroundColor: Colors.red,
                 child: const Icon(Icons.close, color: Colors.white),
               ),
             );
