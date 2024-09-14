@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sjym_app/screens/components/area_grid_view.dart';
-import 'package:sjym_app/screens/components/native_grid_view.dart';
-import 'package:sjym_app/screens/components/search_member.dart';
+import 'components/area_grid_view.dart';
+import 'components/native_grid_view.dart';
+import 'components/search_member.dart';
 
 class AddressBookScreen extends StatefulWidget {
   const AddressBookScreen({super.key});
@@ -26,16 +26,16 @@ class _AddressBookScreenState extends State<AddressBookScreen> with SingleTicker
       length: _tabController.length,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Address Book"),
+          title: const Text('Address Book'),
           bottom: TabBar(
             labelStyle: const TextStyle(color: Colors.white),
             unselectedLabelStyle: const TextStyle(color: Colors.white),
             indicatorColor: Colors.orange,
             controller: _tabController,
             tabs: const [
-              Tab(icon: Icon(Icons.search), text: "Member Search"),
-              Tab(icon: Icon(Icons.place_outlined), text: "Area"),
-              Tab(icon: Icon(Icons.place_outlined), text: "Native"),
+              Tab(icon: Icon(Icons.search), text: 'Member Search'),
+              Tab(icon: Icon(Icons.place_outlined), text: 'Area'),
+              Tab(icon: Icon(Icons.place_outlined), text: 'Native'),
             ],
           ),
         ),

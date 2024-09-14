@@ -1,6 +1,6 @@
-import 'package:sjym_app/models/address_statistics.dart';
-import 'package:sjym_app/provider/cache_provider.dart';
-import 'package:sjym_app/repository/address_repository.dart';
+import '../models/address_statistics.dart';
+import '../provider/cache_provider.dart';
+import '../repository/address_repository.dart';
 
 class AddressService {
   AddressService._internal();

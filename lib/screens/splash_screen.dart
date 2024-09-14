@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sjym_app/screens/advertisement_screen.dart';
-import 'package:sjym_app/utils/app_colors.dart';
+import 'advertisement_screen.dart';
+import '../utils/app_colors.dart';
 
 import '../utils/assets.dart';
 

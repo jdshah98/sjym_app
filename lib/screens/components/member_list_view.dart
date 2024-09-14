@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sjym_app/models/member.dart';
-import 'package:sjym_app/widgets/member_card.dart';
+
+import '../../models/member.dart';
+import '../../widgets/member_card.dart';
 
 class MemberListView extends StatelessWidget {
   const MemberListView({super.key, required this.members});

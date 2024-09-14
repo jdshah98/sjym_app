@@ -5,13 +5,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:sjym_app/screens/home_screen.dart';
-import 'package:sjym_app/screens/login_screen.dart';
-import 'package:sjym_app/services/advertisement_service.dart';
-import 'package:sjym_app/utils/assets.dart';
-import 'package:sjym_app/utils/constants.dart';
-import 'package:sjym_app/utils/keys.dart';
-import 'package:sjym_app/widgets/loading_widget.dart';
+import 'home_screen.dart';
+import 'login_screen.dart';
+import '../services/advertisement_service.dart';
+import '../utils/assets.dart';
+import '../utils/constants.dart';
+import '../utils/keys.dart';
+import '../widgets/loading_widget.dart';
 
 class AdvertisementScreen extends StatefulWidget {
   const AdvertisementScreen({super.key});

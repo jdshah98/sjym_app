@@ -1,6 +1,6 @@
-import 'package:sjym_app/models/advertisement_info.dart';
-import 'package:sjym_app/models/entity.dart';
-import 'package:sjym_app/utils/keys.dart';
+import 'advertisement_info.dart';
+import 'entity.dart';
+import '../utils/keys.dart';
 
 class Advertisement extends Entity {
   AdvertisementInfo welcomeAdvertisement;

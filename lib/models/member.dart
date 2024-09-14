@@ -1,5 +1,5 @@
-import 'package:sjym_app/models/committee_type.dart';
-import 'package:sjym_app/utils/helper.dart';
+import 'committee_type.dart';
+import '../utils/helper.dart';
 
 import 'entity.dart';
 import 'name.dart';
@@ -45,7 +45,11 @@ class Member extends Entity {
   String getCommitteeDesignation(CommitteeType committeeType) =>
       committeeType == CommitteeType.main ? profile.mainCommitteeDesignation : profile.yuvaCommitteeDesignation;
 
-  String getAddress() => profile.address.isNotEmpty ? profile.address : "NA";
+  String getAddress() => profile.address.isNotEmpty ? profile.address : 'NA';
+
+  bool isMainMember() => uid == familyId;
+
+  bool canLogin() => username.isEmpty && password.isEmpty;
 
   static Member fromMap(Map<String, dynamic>? map) {
     final Member member = Member();

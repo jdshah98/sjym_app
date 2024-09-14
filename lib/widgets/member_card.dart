@@ -1,8 +1,8 @@
 import 'package:async_builder/async_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sjym_app/utils/app_colors.dart';
-import 'package:sjym_app/widgets/member_detail_view.dart';
+import '../utils/app_colors.dart';
+import 'member_detail_view.dart';
 
 import '../models/member.dart';
 import '../services/member_service.dart';

@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sjym_app/models/advertisement.dart';
-import 'package:sjym_app/provider/cache_provider.dart';
-import 'package:sjym_app/provider/storage_provider.dart';
-import 'package:sjym_app/repository/advertisement_repository.dart';
-import 'package:sjym_app/utils/helper.dart';
+import '../models/advertisement.dart';
+import '../provider/cache_provider.dart';
+import '../provider/storage_provider.dart';
+import '../repository/advertisement_repository.dart';
+import '../utils/helper.dart';
 
 class AdvertisementService {
   AdvertisementService._internal();

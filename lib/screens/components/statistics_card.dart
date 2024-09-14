@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sjym_app/models/family_stat.dart';
-import 'package:sjym_app/utils/helper.dart';
+import '../../models/family_stat.dart';
+import '../../utils/helper.dart';
 import '../../widgets/text_icon.dart';
 
 class StatisticsCard extends StatelessWidget {
@@ -33,7 +33,7 @@ class StatisticsCard extends StatelessWidget {
                   color: Colors.white,
                 ),
                 text: Text(
-                  "${familyStat.familyCount}",
+                  '${familyStat.familyCount}',
                   style: const TextStyle(color: Colors.white, fontSize: 16),
                   softWrap: true,
                   textAlign: TextAlign.center,
@@ -48,7 +48,7 @@ class StatisticsCard extends StatelessWidget {
                   color: Colors.white,
                 ),
                 text: Text(
-                  "${familyStat.familyMemberCount}",
+                  '${familyStat.familyMemberCount}',
                   style: const TextStyle(color: Colors.white, fontSize: 16),
                   softWrap: true,
                   textAlign: TextAlign.center,

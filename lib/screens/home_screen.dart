@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:sjym_app/models/member.dart';
-import 'package:sjym_app/screens/about_screen.dart';
-import 'package:sjym_app/screens/address_book_screen.dart';
-import 'package:sjym_app/screens/admin_panel.dart';
-import 'package:sjym_app/screens/blood_bank_screen.dart';
-import 'package:sjym_app/screens/committee_screen.dart';
-import 'package:sjym_app/screens/contact_us_screen.dart';
-import 'package:sjym_app/screens/events_screen.dart';
-import 'package:sjym_app/screens/jobs_screen.dart';
-import 'package:sjym_app/screens/login_screen.dart';
-import 'package:sjym_app/screens/matrimony_screen.dart';
-import 'package:sjym_app/screens/news_screen.dart';
-import 'package:sjym_app/screens/profile_screen.dart';
-import 'package:sjym_app/screens/samaj_info_screen.dart';
-import 'package:sjym_app/utils/app_colors.dart';
-import 'package:sjym_app/utils/assets.dart';
-import 'package:sjym_app/utils/constants.dart';
-import 'package:sjym_app/utils/keys.dart';
-import 'package:sjym_app/widgets/thumbnail_image.dart';
+import '../models/member.dart';
+import '../provider/cache_provider.dart';
+import 'about_screen.dart';
+import 'address_book_screen.dart';
+import 'admin_panel.dart';
+import 'blood_bank_screen.dart';
+import 'committee_screen.dart';
+import 'contact_us_screen.dart';
+import 'events_screen.dart';
+import 'jobs_screen.dart';
+import 'login_screen.dart';
+import 'matrimony_screen.dart';
+import 'news_screen.dart';
+import 'profile_screen.dart';
+import 'samaj_info_screen.dart';
+import '../utils/app_colors.dart';
+import '../utils/assets.dart';
+import '../utils/constants.dart';
+import '../widgets/thumbnail_image.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,18 +28,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final GetStorage _getStorage = GetStorage(Constants.userContainer);
-
   Member? _loggedInMember;
 
   @override
   void initState() {
     super.initState();
-    _loggedInMember = Member.fromMap(_getStorage.read<Map<String, dynamic>>(Keys.loggedInMember));
+    _loggedInMember = CacheProvider().getLoggedInMember();
     if (_loggedInMember == null) {
-      _getStorage.erase();
-
-      Get.offAll(() => const LoginScreen());
+      _logout();
     }
   }
 
@@ -77,8 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 case 4:
                   {
-                    _getStorage.erase();
-                    Get.offAll(() => const LoginScreen());
+                    _logout();
                     break;
                   }
                 default:
@@ -174,6 +168,11 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Text('Logout', style: menuItemTextStyle),
       ),
     ];
+  }
+
+  _logout() {
+    CacheProvider().eraseUserCache();
+    Get.offAll(() => const LoginScreen());
   }
 }
 

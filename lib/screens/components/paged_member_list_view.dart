@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:sjym_app/models/member.dart';
-import 'package:sjym_app/widgets/member_card.dart';
+import '../../models/member.dart';
+import '../../widgets/member_card.dart';
 
 class PagedMemberListView extends StatefulWidget {
   const PagedMemberListView({super.key, required this.function, required this.searchParam});
@@ -55,7 +55,7 @@ class _PagedMemberListViewState extends State<PagedMemberListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Member List")),
+      appBar: AppBar(title: const Text('Member List')),
       body: PagedListView<int, Member>(
         pagingController: _pagingController,
         builderDelegate: PagedChildBuilderDelegate<Member>(

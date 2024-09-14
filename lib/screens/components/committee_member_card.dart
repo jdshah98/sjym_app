@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
-import 'package:sjym_app/models/committee_type.dart';
-import 'package:sjym_app/models/member.dart';
-import 'package:sjym_app/utils/app_colors.dart';
+import '../../models/committee_type.dart';
+import '../../models/member.dart';
+import '../../utils/app_colors.dart';
 
 import '../../widgets/thumbnail_image.dart';
 

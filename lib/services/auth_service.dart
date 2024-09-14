@@ -1,8 +1,8 @@
 import 'dart:developer';
 
-import 'package:sjym_app/models/api_response.dart';
-import 'package:sjym_app/models/member.dart';
-import 'package:sjym_app/repository/member_repository.dart';
+import '../models/api_response.dart';
+import '../models/member.dart';
+import '../repository/member_repository.dart';
 
 import '../models/login_request.dart';
 

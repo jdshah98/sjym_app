@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sjym_app/utils/assets.dart';
+import '../utils/assets.dart';
 
 import '../utils/helper.dart';
 

@@ -2,9 +2,9 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sjym_app/models/committee_type.dart';
-import 'package:sjym_app/models/member.dart';
-import 'package:sjym_app/utils/keys.dart';
+import '../models/committee_type.dart';
+import '../models/member.dart';
+import '../utils/keys.dart';
 
 class MemberRepository {
   MemberRepository._internal();
@@ -70,7 +70,7 @@ class MemberRepository {
 
   Future<List<Member>> findUsersByParams(String? name, String? area, String? nativePlace) async {
     if (name == null && area == null && nativePlace == null) {
-      throw Exception("Invalid Search Criteria!!");
+      throw Exception('Invalid Search Criteria!!');
     }
 
     Query<Map<String, dynamic>> query = _ref;
@@ -80,7 +80,7 @@ class MemberRepository {
             Keys.name,
             isGreaterThan: name,
           )
-          .where(Keys.name, isLessThan: "${name}z");
+          .where(Keys.name, isLessThan: '${name}z');
     }
     if (area != null) {
       query = query.where(Keys.area, isEqualTo: area);
@@ -103,6 +103,25 @@ class MemberRepository {
     return _getMemberList(querySnapshot);
   }
 
+  Future<void> removeById(String uid) async => await _ref.doc(uid).delete();
+
+  Future<Member> save(Member member) async {
+    if (member.uid.trim().isEmpty) {
+      DocumentReference<Map<String, dynamic>> memberRef = _ref.doc();
+      member.uid = memberRef.id;
+      if (member.canLogin()) {
+        member.familyId = memberRef.id;
+      }
+
+      await memberRef.set(member.toMap());
+      return member;
+    } else {
+      member.lastUpdated = DateTime.now().microsecondsSinceEpoch;
+      await _ref.doc(member.uid).update(member.toMap());
+      return member;
+    }
+  }
+
   /// private methods
   List<Member> _getMemberList(QuerySnapshot<Map<String, dynamic>> querySnapshot) {
     List<Member> members = [];
@@ -111,7 +130,7 @@ class MemberRepository {
         members.add(Member.fromMap(snapshot.data()));
       }
     }
-    debugPrint("Members List: ${members.length}");
+    debugPrint('Members List: ${members.length}');
     return members;
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sjym_app/utils/app_colors.dart';
+import '../utils/app_colors.dart';
 
 class LoadingDialog extends StatelessWidget {
   final String text;

@@ -1,6 +1,6 @@
-import 'package:sjym_app/models/entity.dart';
-import 'package:sjym_app/utils/helper.dart';
-import 'package:sjym_app/utils/keys.dart';
+import 'entity.dart';
+import '../utils/helper.dart';
+import '../utils/keys.dart';
 
 class FamilyStat extends Entity {
   int familyCount;

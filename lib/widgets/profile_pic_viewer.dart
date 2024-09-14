@@ -2,7 +2,7 @@ import 'package:async_builder/async_builder.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sjym_app/utils/assets.dart';
+import '../utils/assets.dart';
 
 import '../services/member_service.dart';
 

@@ -1,11 +1,11 @@
 import 'package:get_storage/get_storage.dart';
-import 'package:sjym_app/models/address_statistics.dart';
-import 'package:sjym_app/models/advertisement.dart';
-import 'package:sjym_app/models/committee_type.dart';
-import 'package:sjym_app/models/member.dart';
-import 'package:sjym_app/utils/constants.dart';
-import 'package:sjym_app/utils/helper.dart';
-import 'package:sjym_app/utils/keys.dart';
+import '../models/address_statistics.dart';
+import '../models/advertisement.dart';
+import '../models/committee_type.dart';
+import '../models/member.dart';
+import '../utils/constants.dart';
+import '../utils/helper.dart';
+import '../utils/keys.dart';
 
 class CacheProvider {
   CacheProvider._internal();
@@ -14,15 +14,20 @@ class CacheProvider {
 
   factory CacheProvider() => _instance;
 
+  final GetStorage _userCache = GetStorage(Constants.userContainer);
   final GetStorage _cache = GetStorage(Constants.cacheContainer);
   final GetStorage _inMemory = GetStorage(Constants.memoryContainer);
 
   static const int _monthCache = 2592000; // seconds
 
+  Member getLoggedInMember() => Member.fromMap(_userCache.read<Map<String, dynamic>>(Keys.loggedInMember));
+
+  void eraseUserCache() => _userCache.erase();
+
   List<Member> getCommitteeMembersByType(CommitteeType committeeType) {
     List<dynamic> cachedValue = _cache.read<List<dynamic>>(_getCommitteeMembersKeyByType(committeeType)) ?? [];
 
-    return cachedValue.map((e) => Member.fromMap(e)).toList();
+    return cachedValue.map((e) => Member.fromMap(e as Map<String, dynamic>)).toList();
   }
 
   bool isCommitteeMembersCacheExpired(CommitteeType committeeType) {
@@ -67,9 +72,7 @@ class CacheProvider {
     return null;
   }
 
-  void setAdvertisement(Advertisement advertisement) {
-    _cache.write(Keys.advertisement, advertisement.toMap());
-  }
+  void setAdvertisement(Advertisement advertisement) => _cache.write(Keys.advertisement, advertisement.toMap());
 
   Advertisement? getAdvertisement() {
     Map<String, dynamic>? cachedValue = _cache.read<Map<String, dynamic>>(Keys.advertisement);
@@ -79,16 +82,14 @@ class CacheProvider {
     return null;
   }
 
-  void setFamilyMembers(List<Member> familyMembers, String familyId) {
-    _cache.writeInMemory("${Keys.familyMember}_$familyId", familyMembers.map((e) => e.toMap()).toList());
-  }
+  void setFamilyMembers(List<Member> familyMembers, String familyId) => _cache.writeInMemory(
+        '${Keys.familyMember}_$familyId',
+        familyMembers.map((e) => e.toMap()).toList(),
+      );
 
   List<Member> getFamilyMembers(String familyId) {
-    List<dynamic>? cachedValue = _cache.read<List<dynamic>>("${Keys.familyMember}_$familyId");
-    if (cachedValue != null) {
-      return cachedValue.map((e) => Member.fromMap(e as Map<String, dynamic>)).toList();
-    }
-    return [];
+    List<dynamic> cachedValue = _cache.read<List<dynamic>>('${Keys.familyMember}_$familyId') ?? [];
+    return cachedValue.map((e) => Member.fromMap(e as Map<String, dynamic>)).toList();
   }
 
   /// private methods

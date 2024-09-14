@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:async_builder/async_builder.dart';
 import 'package:flutter/material.dart';
-import 'package:sjym_app/models/committee_type.dart';
-import 'package:sjym_app/models/member.dart';
-import 'package:sjym_app/screens/components/committee_member_card.dart';
-import 'package:sjym_app/services/member_service.dart';
-import 'package:sjym_app/utils/app_colors.dart';
+import '../../models/committee_type.dart';
+import '../../models/member.dart';
+import 'committee_member_card.dart';
+import '../../services/member_service.dart';
+import '../../utils/app_colors.dart';
 
 class CommitteeTabView extends StatelessWidget {
   const CommitteeTabView({super.key, required this.committeeType});

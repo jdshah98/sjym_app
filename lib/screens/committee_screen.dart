@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sjym_app/models/committee_type.dart';
-import 'package:sjym_app/screens/components/committee_tab_view.dart';
+import '../models/committee_type.dart';
+import 'components/committee_tab_view.dart';
 
 class CommitteeScreen extends StatefulWidget {
   const CommitteeScreen({super.key});
@@ -25,7 +25,7 @@ class _CommitteeScreenState extends State<CommitteeScreen> with SingleTickerProv
       length: _tabController.length,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Committee Members"),
+          title: const Text('Committee Members'),
           bottom: TabBar(
             labelStyle: const TextStyle(
               color: Colors.white,
@@ -36,8 +36,8 @@ class _CommitteeScreenState extends State<CommitteeScreen> with SingleTickerProv
             indicatorColor: Colors.orange,
             controller: _tabController,
             tabs: const [
-              Tab(text: "Main Committee"),
-              Tab(text: "Yuva Committee"),
+              Tab(text: 'Main Committee'),
+              Tab(text: 'Yuva Committee'),
             ],
           ),
         ),

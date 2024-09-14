@@ -1,13 +1,15 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:sjym_app/models/api_response.dart';
-import 'package:sjym_app/models/committee_designation.dart';
-import 'package:sjym_app/models/committee_type.dart';
-import 'package:sjym_app/models/member.dart';
-import 'package:sjym_app/provider/cache_provider.dart';
-import 'package:sjym_app/provider/storage_provider.dart';
-import 'package:sjym_app/repository/member_repository.dart';
+import '../models/api_response.dart';
+import '../models/committee_designation.dart';
+import '../models/committee_type.dart';
+import '../models/member.dart';
+import '../provider/cache_provider.dart';
+import '../provider/storage_provider.dart';
+import '../repository/member_repository.dart';
 
 class MemberService {
   MemberService._internal();
@@ -53,16 +55,17 @@ class MemberService {
     if (member != null) {
       return ApiResponse(data: member);
     }
-    return ApiResponse(isError: true, message: "Member Not Found!!");
+    return ApiResponse(isError: true, message: 'Member Not Found!!');
   }
 
   Future<ApiResponse<List<Member>>> getUsersByParams({String? name, String? area, String? nativePlace}) async {
     try {
       final List<Member> members = await MemberRepository().findUsersByParams(name, area, nativePlace);
       return ApiResponse(data: members);
-    } catch (error) {
-      log(error.toString(), name: runtimeType.toString(), error: error);
-      return ApiResponse(isError: true, message: error.toString());
+    } catch (err) {
+      log(err.toString(), error: err, name: runtimeType.toString());
+      debugPrint(err.toString());
+      return ApiResponse(isError: true, message: err.toString());
     }
   }
 
@@ -87,5 +90,46 @@ class MemberService {
 
   Future<String?> getProfileImageUrl(String profileImageFilepath) {
     return StorageProvider().getDownloadUrl(profileImageFilepath);
+  }
+
+  Future<ApiResponse<void>> setProfileImageUrl(File localFile, String imageFilepath) async {
+    bool result = await StorageProvider().uploadImage(localFile, imageFilepath).then<bool>((value) {
+      if (value.state == TaskState.success) {
+        return true;
+      }
+      return false;
+    }).onError((error, stackTrace) {
+      log(stackTrace.toString(), error: error, name: runtimeType.toString());
+      return false;
+    });
+
+    log("Profile Image Update Result: $result");
+
+    return ApiResponse(
+      isError: !result,
+      message: result ? 'Profile Image Updated Successfully!!' : 'Failed to Update Profile Image!!',
+    );
+  }
+
+  Future<ApiResponse<void>> deleteMember(Member member) async {
+    try {
+      await MemberRepository().removeById(member.uid);
+      return ApiResponse(message: 'Member Deleted Successfully!!');
+    } catch (err) {
+      log(err.toString(), error: err, name: runtimeType.toString());
+      debugPrint(err.toString());
+      return ApiResponse(isError: true, message: err.toString());
+    }
+  }
+
+  Future<ApiResponse<Member>> updateMember(Member member) async {
+    try {
+      Member updatedMember = await MemberRepository().save(member);
+      return ApiResponse(data: updatedMember, message: 'Member Updated Successfully!!');
+    } catch (err) {
+      log(err.toString(), error: err, name: runtimeType.toString());
+      debugPrint(err.toString());
+      return ApiResponse(isError: true, message: err.toString());
+    }
   }
 }

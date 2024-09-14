@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sjym_app/models/advertisement.dart';
+import '../models/advertisement.dart';
 
 class AdvertisementRepository {
   AdvertisementRepository._internal();

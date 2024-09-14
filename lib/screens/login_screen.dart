@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:sjym_app/models/member.dart';
-import 'package:sjym_app/utils/app_colors.dart';
-import 'package:sjym_app/utils/keys.dart';
-import 'package:sjym_app/widgets/loading_dialog.dart';
+import '../models/member.dart';
+import '../utils/app_colors.dart';
+import '../utils/keys.dart';
+import '../widgets/loading_dialog.dart';
 import '../models/login_request.dart';
 import 'home_screen.dart';
 import '../services/auth_service.dart';
@@ -171,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(result.message),
             backgroundColor: Colors.red,
-            duration: const Duration(seconds: 2),
+            duration: const Duration(milliseconds: 2000),
           ));
         }
       }

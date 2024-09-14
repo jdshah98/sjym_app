@@ -10,7 +10,7 @@ class StorageProvider {
   factory StorageProvider() => _instance;
 
   final Reference _advertisementRef = FirebaseStorage.instance.ref('advertisement');
-  final Reference _profileRef = FirebaseStorage.instance.ref("profile");
+  final Reference _profileRef = FirebaseStorage.instance.ref('profile');
 
   Future<TaskSnapshot> uploadAdvertisment(String filepath, File file) async {
     UploadTask uploadTask = _advertisementRef.child(filepath).putFile(file);
@@ -22,12 +22,12 @@ class StorageProvider {
     return await downloadTask.whenComplete(() => null);
   }
 
-  Future<String> getDownloadUrl(String imageName) async {
-    return _profileRef.child(imageName).getDownloadURL();
+  Future<String> getDownloadUrl(String imageFilepath) async {
+    return _profileRef.child(imageFilepath).getDownloadURL();
   }
 
-  Future<TaskSnapshot> uploadImage(File imageFile, String imageName) async {
-    UploadTask uploadTask = _profileRef.child(imageName).putFile(imageFile);
+  Future<TaskSnapshot> uploadImage(File imageFile, String imageFilepath) async {
+    UploadTask uploadTask = _profileRef.child(imageFilepath).putFile(imageFile);
     return await uploadTask.whenComplete(() => null);
   }
 }

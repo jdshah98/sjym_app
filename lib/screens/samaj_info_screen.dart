@@ -7,7 +7,7 @@ class SamajInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Samaj Info"),
+        title: const Text('Samaj Info'),
       ),
     );
   }

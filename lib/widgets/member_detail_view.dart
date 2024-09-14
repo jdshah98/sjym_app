@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sjym_app/models/member.dart';
+import '../models/member.dart';
 
 import 'profile_pic_viewer.dart';
 import 'thumbnail_image.dart';

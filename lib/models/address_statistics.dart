@@ -1,5 +1,5 @@
-import 'package:sjym_app/models/family_stat.dart';
-import 'package:sjym_app/models/entity.dart';
+import 'family_stat.dart';
+import 'entity.dart';
 
 class AddressStatistics extends Entity {
   Map<String, FamilyStat> stats;

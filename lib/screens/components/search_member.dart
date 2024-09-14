@@ -4,12 +4,12 @@ import 'package:async_builder/async_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:sjym_app/models/address_statistics.dart';
-import 'package:sjym_app/services/address_service.dart';
-import 'package:sjym_app/services/member_service.dart';
-import 'package:sjym_app/utils/app_colors.dart';
-import 'package:sjym_app/widgets/loading_dialog.dart';
-import 'package:sjym_app/widgets/radio_list_dialog.dart';
+import '../../models/address_statistics.dart';
+import '../../services/address_service.dart';
+import '../../services/member_service.dart';
+import '../../utils/app_colors.dart';
+import '../../widgets/loading_dialog.dart';
+import '../../widgets/radio_list_dialog.dart';
 
 class SearchMember extends StatefulWidget {
   const SearchMember({super.key});
@@ -46,12 +46,12 @@ class _SearchMemberState extends State<SearchMember> {
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.phone),
                     border: OutlineInputBorder(),
-                    label: Text("Mobile No"),
+                    label: Text('Mobile No'),
                   ),
                 ),
               ),
               const Center(
-                child: Text("OR", style: TextStyle(fontSize: 18)),
+                child: Text('OR', style: TextStyle(fontSize: 18)),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
@@ -60,7 +60,7 @@ class _SearchMemberState extends State<SearchMember> {
                   keyboardType: TextInputType.name,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    label: Text("Name"),
+                    label: Text('Name'),
                   ),
                 ),
               ),
@@ -75,7 +75,7 @@ class _SearchMemberState extends State<SearchMember> {
                         readOnly: true,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
-                          label: Text("Area"),
+                          label: Text('Area'),
                         ),
                         onTap: () => showDialog<String>(
                           context: context,
@@ -90,7 +90,7 @@ class _SearchMemberState extends State<SearchMember> {
                               builder: (context, value) {
                                 final AddressStatistics areaStatistics = value ?? AddressStatistics();
                                 return RadioListDialog(
-                                  title: "Select Area",
+                                  title: 'Select Area',
                                   selectedValue: _areaController.value.text,
                                   entries: areaStatistics.stats.keys.toList(),
                                 );
@@ -116,7 +116,7 @@ class _SearchMemberState extends State<SearchMember> {
                         readOnly: true,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
-                          label: Text("Native"),
+                          label: Text('Native'),
                         ),
                         onTap: () => showDialog<String>(
                           context: context,
@@ -131,7 +131,7 @@ class _SearchMemberState extends State<SearchMember> {
                               builder: (context, value) {
                                 final AddressStatistics nativePlaceStatistics = value ?? AddressStatistics();
                                 return RadioListDialog(
-                                  title: "Select Native Place",
+                                  title: 'Select Native Place',
                                   selectedValue: _nativePlaceController.value.text,
                                   entries: nativePlaceStatistics.stats.keys.toList(),
                                 );
@@ -163,7 +163,7 @@ class _SearchMemberState extends State<SearchMember> {
                   onPressed: _searchMembers,
                   icon: const Icon(Icons.search),
                   label: const Text(
-                    "SEARCH",
+                    'SEARCH',
                     style: TextStyle(fontSize: 16),
                   ),
                 ),
@@ -200,7 +200,7 @@ class _SearchMemberState extends State<SearchMember> {
       return;
     }
 
-    Get.dialog(const LoadingDialog(text: "Searching..."));
+    Get.dialog(const LoadingDialog(text: 'Searching...'));
 
     String mobileNo = _mobileNoController.value.text.trim();
 
@@ -218,7 +218,7 @@ class _SearchMemberState extends State<SearchMember> {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(result.message),
               backgroundColor: Colors.red,
-              duration: const Duration(seconds: 2),
+              duration: const Duration(milliseconds: 2000),
             ));
           }
         }
@@ -245,7 +245,7 @@ class _SearchMemberState extends State<SearchMember> {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(result.message),
               backgroundColor: Colors.red,
-              duration: const Duration(seconds: 2),
+              duration: const Duration(milliseconds: 2000),
             ));
           }
         }

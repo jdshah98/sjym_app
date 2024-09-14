@@ -43,12 +43,12 @@ class _RadioListDialogState extends State<RadioListDialog> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
                       child: TextFormField(
-                        enabled: _selectedValue.compareTo("other") == 0,
+                        enabled: _selectedValue.compareTo('other') == 0,
                         keyboardType: TextInputType.name,
                         controller: _textEditingController,
                         decoration: const InputDecoration(
                           border: UnderlineInputBorder(),
-                          hintText: "New Value",
+                          hintText: 'New Value',
                         ),
                       ),
                     ),
@@ -87,7 +87,7 @@ class _RadioListDialogState extends State<RadioListDialog> {
                   ),
                   TextButton(
                     onPressed: () {
-                      if (_selectedValue.compareTo("other") == 0) {
+                      if (_selectedValue.compareTo('other') == 0) {
                         if (_textEditingController.value.text.isNotEmpty) {
                           Get.back(result: _textEditingController.value.text.trim());
                         } else {

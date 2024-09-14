@@ -1,8 +1,8 @@
 enum CommitteeType {
-  main("main"),
-  yuva("yuva"),
-  both("both"),
-  na("");
+  main('main'),
+  yuva('yuva'),
+  both('both'),
+  na('');
 
   final String value;
 
