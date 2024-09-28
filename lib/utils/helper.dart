@@ -32,7 +32,7 @@ class Helper {
 
   static String getString(Map<String, dynamic> map, String key, {String defaultValue = ''}) => map[key] ?? defaultValue;
 
-  static int? getInt(Map<String, dynamic> map, String key, {int? defaultValue}) => map[key] ?? defaultValue;
+  static int? getInt(Map<String, dynamic> map, String key) => map[key];
 
   static bool getBool(Map<String, dynamic> map, String key, {bool defaultValue = false}) => map[key] ?? defaultValue;
 
@@ -55,7 +55,15 @@ class Helper {
     return null;
   }
 
-  static DateTime parseDate(String formattedDate) => _dateformatter.parse(formattedDate);
+  static DateTime? parseDate(String formattedDate) {
+    if (formattedDate.isEmpty) {
+      return null;
+    }
+    if (formattedDate.compareTo('NA') == 0) {
+      return null;
+    }
+    return _dateformatter.parse(formattedDate);
+  }
 
   static Future<Uint8List> generateThumbnail(
     File imageFile,

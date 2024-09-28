@@ -29,13 +29,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Member? _loggedInMember;
+  late Member _loggedInMember;
 
   @override
   void initState() {
     super.initState();
+
     _loggedInMember = CacheProvider().getLoggedInMember();
-    if (_loggedInMember == null) {
+    if (!_loggedInMember.canLogin()) {
       _logout();
     }
   }
@@ -48,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           PopupMenuButton(
             icon: ThumbnailImage(
-              image: _loggedInMember!.profile.thumbnail,
+              image: _loggedInMember.profile.thumbnail,
               width: 36,
               height: 36,
             ),
@@ -154,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
         value: 1,
         child: Text('Profile', style: menuItemTextStyle),
       ),
-      if (_loggedInMember!.isAdmin) ...[
+      if (_loggedInMember.isAdmin) ...[
         PopupMenuItem<int>(
           value: 2,
           child: Text('Admin Panel', style: menuItemTextStyle),

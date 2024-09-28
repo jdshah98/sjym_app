@@ -20,6 +20,7 @@ class Member extends Entity {
   String bloodGroup;
   Name name;
   Profile profile;
+  int familyOrder;
   int? lastUpdated;
 
   Member({
@@ -35,6 +36,7 @@ class Member extends Entity {
     this.showInMatrimony = false,
     this.committeeType = '',
     this.bloodGroup = '',
+    this.familyOrder = 999,
     Name? name,
     Profile? profile,
   })  : name = name ?? Name(),
@@ -47,7 +49,7 @@ class Member extends Entity {
 
   bool isMainMember() => uid == familyId;
 
-  bool canLogin() => username.isEmpty && password.isEmpty;
+  bool canLogin() => username.isNotEmpty && password.isNotEmpty;
 
   static Member fromMap(Map<String, dynamic>? map) {
     final Member member = Member();
@@ -67,6 +69,7 @@ class Member extends Entity {
       member.name = Name.fromMap(map[Keys.name]);
       member.profile = Profile.fromMap(map[Keys.profile]);
       member.lastUpdated = Helper.getInt(map, Keys.lastUpdated);
+      member.familyOrder = Helper.getInt(map, Keys.familyOrder) ?? 999;
     }
     return member;
   }
@@ -87,7 +90,8 @@ class Member extends Entity {
         Keys.bloodGroup: bloodGroup,
         Keys.name: name.toMap(),
         Keys.profile: profile.toMap(),
-        Keys.lastUpdated: lastUpdated
+        Keys.lastUpdated: lastUpdated,
+        Keys.familyOrder: familyOrder,
       };
 
   @override

@@ -164,7 +164,7 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
           return ImagePickerResponse(
             localFile: File(localFilePath),
             thumbnail: thumbnail,
-            filename: imageFilepath,
+            filepath: imageFilepath,
           );
         }
       }

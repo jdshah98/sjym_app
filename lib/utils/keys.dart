@@ -34,6 +34,7 @@ class Keys {
   static const String name = 'name';
   static const String profile = 'profile';
   static const String lastUpdated = 'last_updated';
+  static const String familyOrder = 'family_order';
 
   /// Advertisement
   static const String welcomeAdvertisement = 'welcome_ad';

@@ -75,16 +75,11 @@ class MemberService {
       return familyMembers;
     }
     familyMembers = await MemberRepository().findMembersByFamilyId(familyId);
-    familyMembers.sort((m1, m2) {
-      if (m1.profile.dob != null && m2.profile.dob != null) {
-        return m1.profile.dob!.compareTo(m2.profile.dob!);
-      }
-      return -1;
-    });
+    familyMembers.sort((m1, m2) => m1.familyOrder.compareTo(m2.familyOrder));
     for (var member in familyMembers) {
       debugPrint(member.toString());
     }
-    _cacheProvider.setFamilyMembers(familyMembers, familyId);
+    _cacheProvider.setFamilyMembers(familyId, familyMembers);
     return familyMembers;
   }
 
@@ -115,6 +110,17 @@ class MemberService {
     try {
       await MemberRepository().removeById(member.uid);
       return ApiResponse(message: 'Member Deleted Successfully!!');
+    } catch (err) {
+      log(err.toString(), error: err, name: runtimeType.toString());
+      debugPrint(err.toString());
+      return ApiResponse(isError: true, message: err.toString());
+    }
+  }
+
+  Future<ApiResponse<Member>> saveMember(Member member) async {
+    try {
+      Member savedMember = await MemberRepository().save(member);
+      return ApiResponse(data: savedMember, message: 'Member Saved Successfully!!');
     } catch (err) {
       log(err.toString(), error: err, name: runtimeType.toString());
       debugPrint(err.toString());

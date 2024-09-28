@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sjym_app/screens/components/add_member.dart';
+import 'package:sjym_app/utils/constants.dart';
 import '../models/address_type.dart';
 import '../widgets/address_dialog.dart';
 import '../models/member.dart';
@@ -160,7 +162,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     'Family Members',
                                     style: TextStyle(
                                       color: Theme.of(context).primaryColor,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w600,
                                       fontSize: 18,
                                     ),
                                   ),
@@ -202,7 +204,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<void> _updateProfile() async {}
 
-  Future<void> _addMember() async {}
+  Future<void> _addMember() async {
+    final String? result = await Get.to<String>(AddFamilyMember(
+      familyId: _member.familyId,
+      familyMemberCount: _familyMembers.length,
+    ));
+
+    if (result == Constants.successResult) {
+      setState(() {
+        _familyMembers = CacheProvider().getFamilyMembers(_member.familyId);
+      });
+    }
+  }
 
   void _onFamilyMemberTap(Member familyMember) {
     showModalBottomSheet<String>(
@@ -222,7 +235,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           setState(() {
             _familyMembers = familyMembers;
           });
-          CacheProvider().setFamilyMembers(familyMembers, _member.familyId);
+          CacheProvider().setFamilyMembers(_member.familyId, familyMembers);
         },
       ),
     );

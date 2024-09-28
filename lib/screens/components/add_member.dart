@@ -1,30 +1,34 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:sjym_app/models/api_response.dart';
+import 'package:sjym_app/models/name.dart';
+import 'package:sjym_app/models/profile.dart';
+import 'package:sjym_app/screens/login_screen.dart';
+import 'package:sjym_app/widgets/loading_dialog.dart';
 
-import '../../models/api_response.dart';
 import '../../models/image_picker_response.dart';
 import '../../models/member.dart';
-import '../../models/name.dart';
 import '../../provider/cache_provider.dart';
 import '../../services/member_service.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/helper.dart';
-import '../../widgets/loading_dialog.dart';
 import '../../widgets/thumbnail_image.dart';
 import 'custom_image_picker.dart';
 
-class EditFamilyMember extends StatefulWidget {
-  const EditFamilyMember({super.key, required this.member});
+class AddFamilyMember extends StatefulWidget {
+  const AddFamilyMember({super.key, required this.familyId, required this.familyMemberCount});
 
-  final Member member;
+  final String familyId;
+  final int familyMemberCount;
 
   @override
-  State<EditFamilyMember> createState() => _EditFamilyMemberState();
+  State<AddFamilyMember> createState() => _AddFamilyMemberState();
 }
 
-class _EditFamilyMemberState extends State<EditFamilyMember> {
+class _AddFamilyMemberState extends State<AddFamilyMember> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _middleNameController = TextEditingController();
@@ -38,56 +42,19 @@ class _EditFamilyMemberState extends State<EditFamilyMember> {
   final TextEditingController _officeContactController = TextEditingController();
   final TextEditingController _officeAddressController = TextEditingController();
 
-  late String _gender;
-  late bool _isMarried;
-  late bool _showProfileInMatrimony;
-  late Member _member;
+  String _gender = "";
+  bool _isMarried = false;
+  bool _showInMatrimony = false;
 
-  @override
-  void initState() {
-    super.initState();
-
-    _member = widget.member;
-
-    _gender = _member.gender;
-    _isMarried = _member.isMarried;
-    _showProfileInMatrimony = _member.showInMatrimony;
-
-    _firstNameController.text = _member.name.firstName;
-    _middleNameController.text = _member.name.middleName;
-    _lastnameController.text = _member.name.lastName;
-    _mobileNumberController.text = _member.profile.mobileNumber;
-    _dobController.text = Helper.getFormattedDate(microseconds: _member.profile.dob) ?? 'NA';
-    _bloodGroupController.text = _member.bloodGroup;
-    _emailController.text = _member.profile.email;
-    _educationController.text = _member.profile.education;
-    _occupationController.text = _member.profile.occupation;
-    _officeContactController.text = _member.profile.officeContact;
-    _officeAddressController.text = _member.profile.officeAddress;
-  }
+  ImagePickerResponse? _imagePickerResponse;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Member'),
+        title: const Text("Create New Member"),
         backgroundColor: AppColors.primaryColor,
         foregroundColor: Colors.white,
-        actions: [
-          TextButton(
-            onPressed: _updateMember,
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              child: Text(
-                'Update',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -101,7 +68,7 @@ class _EditFamilyMemberState extends State<EditFamilyMember> {
                     alignment: Alignment.bottomRight,
                     children: [
                       ThumbnailImage(
-                        image: _member.profile.thumbnail,
+                        image: _imagePickerResponse?.thumbnail ?? "",
                         width: 120,
                         height: 120,
                         fit: BoxFit.cover,
@@ -116,21 +83,15 @@ class _EditFamilyMemberState extends State<EditFamilyMember> {
                             ),
                           ),
                           builder: (context) => CustomImagePicker(
-                            imageFilepath: widget.member.profile.profilePic,
+                            imageFilepath: _imagePickerResponse?.filepath,
                           ),
                         ).then((value) {
                           debugPrint('Selected Image: $value');
                           if (value != null) {
                             if (value.localFile == null) {
-                              setState(() {
-                                _member.profile.thumbnail = '';
-                                _member.profile.profilePic = '';
-                              });
+                              setState(() => _imagePickerResponse = null);
                             } else {
-                              setState(() {
-                                _member.profile.thumbnail = value.thumbnail ?? '';
-                                _member.profile.profilePic = value.filepath ?? '';
-                              });
+                              setState(() => _imagePickerResponse = value);
                             }
                           }
                         }),
@@ -195,8 +156,10 @@ class _EditFamilyMemberState extends State<EditFamilyMember> {
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                 child: TextFormField(
                   keyboardType: TextInputType.phone,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                   controller: _mobileNumberController,
-                  enabled: !_member.isMainMember(),
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     label: Text('Mobile No'),
@@ -331,9 +294,9 @@ class _EditFamilyMemberState extends State<EditFamilyMember> {
                       ),
                       Switch(
                         onChanged: (value) => setState(
-                          () => _showProfileInMatrimony = value,
+                          () => _showInMatrimony = value,
                         ),
-                        value: _showProfileInMatrimony,
+                        value: _showInMatrimony,
                       ),
                     ],
                   ),
@@ -399,6 +362,19 @@ class _EditFamilyMemberState extends State<EditFamilyMember> {
                   ),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                child: ElevatedButton(
+                  onPressed: _addFamilyMember,
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: const Size(180, 48),
+                  ),
+                  child: const Text(
+                    "Submit",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -406,140 +382,94 @@ class _EditFamilyMemberState extends State<EditFamilyMember> {
     );
   }
 
-  _isFormChanged() {
-    if (_member.name.firstName.trim() != _firstNameController.value.text.trim()) {
-      return true;
-    }
-    if (_member.name.middleName.trim() != _middleNameController.value.text.trim()) {
-      return true;
-    }
-    if (_member.name.lastName.trim() != _lastnameController.value.text.trim()) {
-      return true;
-    }
-    if (_member.profile.mobileNumber.trim() != _mobileNumberController.value.text.trim()) {
-      return true;
-    }
-    if (_member.profile.dob == null) {
-      if (_dobController.value.text.trim().isNotEmpty) {
-        return true;
-      }
-    } else {
-      String memberDob = Helper.getFormattedDate(microseconds: _member.profile.dob!) ?? 'NA';
-      if (_dobController.value.text.trim() != memberDob) {
-        return true;
-      }
-    }
-    if (_member.gender != _gender) {
-      return true;
-    }
-    if (_member.bloodGroup.trim() != _bloodGroupController.value.text.trim()) {
-      return true;
-    }
-    if (_member.isMarried != _isMarried) {
-      return true;
-    }
-    if (_member.showInMatrimony != _showProfileInMatrimony) {
-      return true;
-    }
-    if (_member.profile.email.trim() != _emailController.value.text.trim()) {
-      return true;
-    }
-    if (_member.profile.education.trim() != _educationController.value.text.trim()) {
-      return true;
-    }
-    if (_member.profile.occupation.trim() != _occupationController.value.text.trim()) {
-      return true;
-    }
-    if (_member.profile.officeContact.trim() != _officeContactController.value.text.trim()) {
-      return true;
-    }
-    if (_member.profile.officeAddress.trim() != _officeAddressController.value.text.trim()) {
-      return true;
-    }
-    return false;
-  }
-
-  _isProfileLimitReached() {
-    final DateTime lastProfileUpdated = Helper.getDate(_member.lastUpdated);
-    DateTime today = DateTime.now();
-    DateTime yesterday = today.subtract(const Duration(days: 1));
-    if (lastProfileUpdated.isAfter(yesterday) && lastProfileUpdated.day == today.day) {
-      return true;
-    }
-    return false;
-  }
-
-  _updateMember() async {
-    if (!_formKey.currentState!.validate() && !_isFormChanged()) {
+  void _addFamilyMember() async {
+    if (!_formKey.currentState!.validate()) {
+      // Invalid Form
       return;
     }
 
-    if (_isProfileLimitReached()) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Profile can be updated only once within 24 hours!!'),
-        backgroundColor: Colors.red,
-        duration: Duration(milliseconds: 2000),
-      ));
-      return;
+    final Member loggedInMember = CacheProvider().getLoggedInMember();
+    if (!loggedInMember.canLogin()) {
+      CacheProvider().eraseUserCache();
+      Get.offAll(() => const LoginScreen());
     }
 
     // Show Loading Dialog
-    Get.dialog(const LoadingDialog(text: 'Updating Profile...'));
+    Get.dialog(const LoadingDialog(text: 'Saving Member...'));
 
-    Member updatedMember = Member();
-    updatedMember.name = Name(
-      firstName: _firstNameController.value.text.trim(),
-      middleName: _middleNameController.value.text.trim(),
-      lastName: _lastnameController.value.text.trim(),
+    final Member familyMember = Member(
+      familyId: loggedInMember.familyId,
+      area: loggedInMember.area,
+      nativePlace: loggedInMember.nativePlace,
+      bloodGroup: _bloodGroupController.value.text.trim(),
+      gender: _gender,
+      isMarried: _isMarried,
+      showInMatrimony: _showInMatrimony,
+      name: Name(
+        firstName: _firstNameController.value.text.trim(),
+        middleName: _middleNameController.value.text.trim(),
+        lastName: _lastnameController.value.text.trim(),
+      ),
+      profile: Profile(
+        profilePic: _imagePickerResponse?.filepath ?? '',
+        thumbnail: _imagePickerResponse?.thumbnail ?? '',
+        mobileNumber: _mobileNumberController.value.text.trim(),
+        address: loggedInMember.profile.address,
+        email: _emailController.value.text.trim(),
+        education: _educationController.value.text.trim(),
+        occupation: _occupationController.value.text.trim(),
+        officeAddress: _officeAddressController.value.text.trim(),
+        officeContact: _officeContactController.value.text.trim(),
+        dob: Helper.parseDate(_dobController.value.text.trim())?.microsecondsSinceEpoch,
+      ),
+      familyOrder: widget.familyMemberCount,
     );
-    updatedMember.profile.mobileNumber = _mobileNumberController.value.text.trim();
-    if (_dobController.value.text.trim().isNotEmpty && _dobController.value.text.compareTo('NA') != 0) {
-      updatedMember.profile.dob = Helper.parseDate(_dobController.value.text.trim())?.microsecondsSinceEpoch;
-    }
-    updatedMember.bloodGroup = _bloodGroupController.value.text;
-    updatedMember.gender = _gender;
-    updatedMember.isMarried = _isMarried;
-    if (!updatedMember.isMarried) {
-      updatedMember.showInMatrimony = _showProfileInMatrimony;
-    } else {
-      updatedMember.showInMatrimony = false;
-    }
-    updatedMember.profile.email = _emailController.value.text;
-    updatedMember.profile.education = _educationController.value.text;
-    updatedMember.profile.occupation = _occupationController.value.text;
-    updatedMember.profile.officeContact = _officeContactController.value.text;
-    updatedMember.profile.officeAddress = _officeAddressController.value.text;
 
     try {
-      ApiResponse<Member> result = await MemberService().updateMember(updatedMember);
+      ApiResponse<Member> result = await MemberService().saveMember(familyMember);
 
       if (!result.isError) {
-        updatedMember = result.data ?? updatedMember;
+        final List<Member> familyMembers = CacheProvider().getFamilyMembers(widget.familyId);
+        familyMembers.add(result.data!);
+        CacheProvider().setFamilyMembers(widget.familyId, familyMembers);
 
-        List<Member> familyMembers = CacheProvider().getFamilyMembers(updatedMember.familyId);
-        int index = familyMembers.indexWhere((element) => element.uid == updatedMember.uid);
-        familyMembers[index] = updatedMember;
-        CacheProvider().setFamilyMembers(updatedMember.familyId, familyMembers);
+        if (_imagePickerResponse != null &&
+            _imagePickerResponse?.localFile != null &&
+            _imagePickerResponse?.filepath != null) {
+          ApiResponse<void> result = await MemberService().setProfileImageUrl(
+            _imagePickerResponse!.localFile!,
+            _imagePickerResponse!.filepath!,
+          );
+          if (result.isError && mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text("Failed to Update Profile Image!! Please try again later!!"),
+              backgroundColor: Colors.red,
+              duration: Duration(milliseconds: 1000),
+            ));
 
+            await Future.delayed(const Duration(milliseconds: 1000));
+          }
+        }
+
+        // Close Dialog
+        Get.back();
         if (mounted) {
-          Get.back();
-
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(result.message),
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Member Added Successfully"),
             backgroundColor: Colors.green,
-            duration: const Duration(milliseconds: 2000),
+            duration: Duration(milliseconds: 2000),
           ));
 
           // Go Back
           Future.delayed(
             const Duration(milliseconds: 2000),
-            () => Get.back<bool>(result: true),
+            () => Get.back(result: 'SUCCESS'),
           );
         }
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Failed to Update Profile!! Please try again later!!'),
+            content: Text('Failed to Save Member!! Please try again later!!'),
             backgroundColor: Colors.red,
             duration: Duration(milliseconds: 2000),
           ));

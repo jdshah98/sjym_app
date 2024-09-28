@@ -111,6 +111,7 @@ class MemberRepository {
       member.uid = memberRef.id;
       if (member.canLogin()) {
         member.familyId = memberRef.id;
+        member.familyOrder = 0;
       }
 
       await memberRef.set(member.toMap());

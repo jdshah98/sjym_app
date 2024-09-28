@@ -84,7 +84,7 @@ class CacheProvider {
     return null;
   }
 
-  void setFamilyMembers(List<Member> familyMembers, String familyId) => _cache.writeInMemory(
+  void setFamilyMembers(String familyId, List<Member> familyMembers) => _cache.writeInMemory(
         '${Keys.familyMember}_$familyId',
         familyMembers.map((e) => e.toMap()).toList(),
       );

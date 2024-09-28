@@ -26,8 +26,8 @@ class StorageProvider {
     return _profileRef.child(imageFilepath).getDownloadURL();
   }
 
-  Future<TaskSnapshot> uploadImage(File imageFile, String imageFilepath) async {
-    UploadTask uploadTask = _profileRef.child(imageFilepath).putFile(imageFile);
+  Future<TaskSnapshot> uploadImage(File localFile, String imageFilepath) async {
+    UploadTask uploadTask = _profileRef.child(imageFilepath).putFile(localFile);
     return await uploadTask.whenComplete(() => null);
   }
 }

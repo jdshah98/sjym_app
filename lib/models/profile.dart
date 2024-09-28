@@ -28,6 +28,7 @@ class Profile extends Entity {
     this.occupation = '',
     this.officeAddress = '',
     this.officeContact = '',
+    int? dob,
   });
 
   String getDateOfBirth() => Helper.getFormattedDate(microseconds: dob) ?? 'NA';

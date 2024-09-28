@@ -1,6 +1,8 @@
 class Constants {
   static const String appName = 'Saurashtra Jain Yuvak Mandal';
 
+  static const String successResult = 'SUCCESS';
+
   // Cache Containers
   static const String userContainer = 'UserContainer';
   static const String cacheContainer = 'CacheContainer';
