@@ -1,15 +1,12 @@
 import 'dart:developer';
 
-import 'package:async_builder/async_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import '../../models/address_statistics.dart';
-import '../../services/address_service.dart';
+import 'package:sjym_app/widgets/address_dialog.dart';
+import '../../models/address_type.dart';
 import '../../services/member_service.dart';
-import '../../utils/app_colors.dart';
 import '../../widgets/loading_dialog.dart';
-import '../../widgets/radio_list_dialog.dart';
 
 class SearchMember extends StatefulWidget {
   const SearchMember({super.key});
@@ -79,24 +76,11 @@ class _SearchMemberState extends State<SearchMember> {
                         ),
                         onTap: () => showDialog<String>(
                           context: context,
-                          builder: (context) {
-                            return AsyncBuilder<AddressStatistics?>(
-                              future: AddressService().getAreaStatistics(),
-                              waiting: (context) => const Center(
-                                child: CircularProgressIndicator(
-                                  color: AppColors.primaryColor,
-                                ),
-                              ),
-                              builder: (context, value) {
-                                final AddressStatistics areaStatistics = value ?? AddressStatistics();
-                                return RadioListDialog(
-                                  title: 'Select Area',
-                                  selectedValue: _areaController.value.text,
-                                  entries: areaStatistics.stats.keys.toList(),
-                                );
-                              },
-                            );
-                          },
+                          builder: (context) => AddressDialog(
+                            title: 'Select Area',
+                            addressType: AddressType.area,
+                            selectedValue: _nativePlaceController.value.text,
+                          ),
                         ).then((value) {
                           if (value != null) {
                             setState(() {
@@ -120,24 +104,11 @@ class _SearchMemberState extends State<SearchMember> {
                         ),
                         onTap: () => showDialog<String>(
                           context: context,
-                          builder: (context) {
-                            return AsyncBuilder<AddressStatistics?>(
-                              future: AddressService().getNativePlaceStatistics(),
-                              waiting: (context) => const Center(
-                                child: CircularProgressIndicator(
-                                  color: AppColors.primaryColor,
-                                ),
-                              ),
-                              builder: (context, value) {
-                                final AddressStatistics nativePlaceStatistics = value ?? AddressStatistics();
-                                return RadioListDialog(
-                                  title: 'Select Native Place',
-                                  selectedValue: _nativePlaceController.value.text,
-                                  entries: nativePlaceStatistics.stats.keys.toList(),
-                                );
-                              },
-                            );
-                          },
+                          builder: (context) => AddressDialog(
+                            title: 'Select Native Place',
+                            addressType: AddressType.native,
+                            selectedValue: _nativePlaceController.value.text,
+                          ),
                         ).then((value) {
                           if (value != null) {
                             setState(() {

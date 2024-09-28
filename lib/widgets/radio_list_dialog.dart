@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../utils/app_colors.dart';
 
 class RadioListDialog extends StatefulWidget {
   const RadioListDialog({
@@ -20,8 +21,6 @@ class RadioListDialog extends StatefulWidget {
 class _RadioListDialogState extends State<RadioListDialog> {
   late String _selectedValue;
 
-  final TextEditingController _textEditingController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -36,75 +35,96 @@ class _RadioListDialogState extends State<RadioListDialog> {
         height: 400,
         child: Column(
           children: [
+            Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16),
+                  topRight: Radius.circular(16),
+                ),
+                color: AppColors.primaryColor,
+              ),
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Text(
+                    widget.title.toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: widget.entries
+                        .map(
+                          (entry) => RadioListTile(
+                            title: Text(entry),
+                            value: entry,
+                            groupValue: _selectedValue,
+                            onChanged: (value) {
+                              if (value != null) {
+                                setState(() {
+                                  _selectedValue = value;
+                                });
+                              }
+                            },
+                          ),
+                        )
+                        .toList()),
+              ),
+            ),
+            IntrinsicHeight(
+              child: Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(16),
+                    bottomRight: Radius.circular(16),
+                  ),
+                  color: AppColors.primaryColor,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
-                      child: TextFormField(
-                        enabled: _selectedValue.compareTo('other') == 0,
-                        keyboardType: TextInputType.name,
-                        controller: _textEditingController,
-                        decoration: const InputDecoration(
-                          border: UnderlineInputBorder(),
-                          hintText: 'New Value',
+                    Flexible(
+                      flex: 1,
+                      child: Center(
+                        child: TextButton(
+                          onPressed: () => Get.back(),
+                          child: Text(
+                            'Cancel'.toUpperCase(),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                    ...widget.entries.map(
-                      (entry) => RadioListTile(
-                        title: Text(entry),
-                        value: entry,
-                        groupValue: _selectedValue,
-                        onChanged: (value) {
-                          if (value != null) {
-                            setState(() {
-                              _selectedValue = value;
-                            });
-                          }
-                        },
+                    const VerticalDivider(),
+                    Flexible(
+                      flex: 1,
+                      child: Center(
+                        child: TextButton(
+                          onPressed: () => Get.back(result: _selectedValue),
+                          child: Text(
+                            'Ok'.toUpperCase(),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-            ),
-            const Divider(),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () => Get.back(),
-                    child: Text(
-                      'Cancel',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      if (_selectedValue.compareTo('other') == 0) {
-                        if (_textEditingController.value.text.isNotEmpty) {
-                          Get.back(result: _textEditingController.value.text.trim());
-                        } else {
-                          Get.back(result: _selectedValue);
-                        }
-                      } else {
-                        Get.back(result: _selectedValue);
-                      }
-                    },
-                    child: Text(
-                      'Ok',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                    ),
-                  ),
-                ],
               ),
             ),
           ],

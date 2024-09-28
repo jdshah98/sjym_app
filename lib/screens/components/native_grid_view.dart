@@ -1,6 +1,7 @@
 import 'package:async_builder/async_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../models/address_type.dart';
 import '../../models/address_statistics.dart';
 import '../../models/family_stat.dart';
 import 'paged_member_list_view.dart';
@@ -22,7 +23,7 @@ class NativeGridView extends StatelessWidget {
         );
       },
       builder: (context, value) {
-        final AddressStatistics nativePlaceStatistics = value ?? AddressStatistics();
+        final AddressStatistics nativePlaceStatistics = value ?? AddressStatistics(AddressType.native);
         return GridView.builder(
           itemCount: nativePlaceStatistics.stats.keys.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -43,8 +44,10 @@ class NativeGridView extends StatelessWidget {
     );
   }
 
-  void _loadMembersByNative(String native) => Get.to(() => PagedMemberListView(
-        function: MemberService().getMembersByNativePlace,
-        searchParam: native,
-      ));
+  void _loadMembersByNative(String native) => Get.to(
+        () => PagedMemberListView(
+          function: MemberService().getMembersByNativePlace,
+          searchParam: native,
+        ),
+      );
 }

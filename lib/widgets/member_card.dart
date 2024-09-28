@@ -1,11 +1,11 @@
 import 'package:async_builder/async_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../utils/app_colors.dart';
-import 'member_detail_view.dart';
 
 import '../models/member.dart';
 import '../services/member_service.dart';
+import '../utils/app_colors.dart';
+import 'member_detail_view.dart';
 import 'thumbnail_image.dart';
 
 class MemberCard extends StatelessWidget {

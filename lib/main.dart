@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'utils/app_colors.dart';
-import 'utils/constants.dart';
 
 import 'firebase_options.dart';
 import 'screens/splash_screen.dart';
+import 'utils/app_colors.dart';
+import 'utils/constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

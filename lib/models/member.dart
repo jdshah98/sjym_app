@@ -1,11 +1,9 @@
-import 'committee_type.dart';
 import '../utils/helper.dart';
-
+import '../utils/keys.dart';
+import 'committee_type.dart';
 import 'entity.dart';
 import 'name.dart';
 import 'profile.dart';
-
-import '../utils/keys.dart';
 
 class Member extends Entity {
   String uid;

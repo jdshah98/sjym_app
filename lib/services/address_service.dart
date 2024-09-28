@@ -1,3 +1,5 @@
+import '../models/address_type.dart';
+
 import '../models/address_statistics.dart';
 import '../provider/cache_provider.dart';
 import '../repository/address_repository.dart';
@@ -9,9 +11,12 @@ class AddressService {
 
   factory AddressService() => _instance;
 
+  Future<AddressStatistics?> getAddressStatistics(AddressType addressType) {
+    return addressType == AddressType.area ? getAreaStatistics() : getNativePlaceStatistics();
+  }
+
   Future<AddressStatistics?> getAreaStatistics() async {
     AddressStatistics? areaStatistics = CacheProvider().getAreaStatistics();
-
     if (areaStatistics == null) {
       areaStatistics = await AddressRepository().fetchAreaStatistics();
 

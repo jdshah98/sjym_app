@@ -1,6 +1,7 @@
 import 'package:async_builder/async_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../models/address_type.dart';
 import '../../models/address_statistics.dart';
 import '../../models/family_stat.dart';
 import 'paged_member_list_view.dart';
@@ -22,7 +23,7 @@ class AreaGridView extends StatelessWidget {
         );
       },
       builder: (context, value) {
-        final AddressStatistics areaStatistics = value ?? AddressStatistics();
+        final AddressStatistics areaStatistics = value ?? AddressStatistics(AddressType.area);
         return GridView.builder(
           itemCount: areaStatistics.stats.keys.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -43,8 +44,10 @@ class AreaGridView extends StatelessWidget {
     );
   }
 
-  void _loadMembersByArea(String area) => Get.to(() => PagedMemberListView(
-        function: MemberService().getMembersByArea,
-        searchParam: area,
-      ));
+  void _loadMembersByArea(String area) => Get.to(
+        () => PagedMemberListView(
+          function: MemberService().getMembersByArea,
+          searchParam: area,
+        ),
+      );
 }

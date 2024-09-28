@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
+
 import '../../models/committee_type.dart';
 import '../../models/member.dart';
 import '../../utils/app_colors.dart';
-
 import '../../widgets/thumbnail_image.dart';
 
 class CommitteeMemberCard extends StatelessWidget {

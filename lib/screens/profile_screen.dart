@@ -1,13 +1,11 @@
-import 'package:async_builder/async_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../models/address_statistics.dart';
+import '../models/address_type.dart';
+import '../widgets/address_dialog.dart';
 import '../models/member.dart';
 import '../provider/cache_provider.dart';
 import 'components/custom_bottom_sheet.dart';
-import '../services/address_service.dart';
 import '../services/member_service.dart';
-import '../widgets/radio_list_dialog.dart';
 import '../widgets/thumbnail_image.dart';
 
 import '../utils/app_colors.dart';
@@ -85,24 +83,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   onTap: () => showDialog<String>(
                     context: context,
-                    builder: (context) {
-                      return AsyncBuilder<AddressStatistics?>(
-                        future: AddressService().getAreaStatistics(),
-                        waiting: (context) => const Center(
-                          child: CircularProgressIndicator(
-                            color: AppColors.primaryColor,
-                          ),
-                        ),
-                        builder: (context, value) {
-                          final AddressStatistics areaStatistics = value ?? AddressStatistics();
-                          return RadioListDialog(
-                            title: 'Select Area',
-                            selectedValue: _areaController.value.text,
-                            entries: areaStatistics.stats.keys.toList(),
-                          );
-                        },
-                      );
-                    },
+                    builder: (context) => AddressDialog(
+                      title: 'Select Area',
+                      addressType: AddressType.area,
+                      selectedValue: _areaController.value.text,
+                    ),
                   ).then((value) {
                     if (value != null) {
                       setState(() {
@@ -124,24 +109,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   onTap: () => showDialog<String>(
                     context: context,
-                    builder: (context) {
-                      return AsyncBuilder<AddressStatistics?>(
-                        future: AddressService().getNativePlaceStatistics(),
-                        waiting: (context) => const Center(
-                          child: CircularProgressIndicator(
-                            color: AppColors.primaryColor,
-                          ),
-                        ),
-                        builder: (context, value) {
-                          final AddressStatistics nativePlaceStatistics = value ?? AddressStatistics();
-                          return RadioListDialog(
-                            title: 'Select Native Place',
-                            selectedValue: _nativePlaceController.value.text,
-                            entries: nativePlaceStatistics.stats.keys.toList(),
-                          );
-                        },
-                      );
-                    },
+                    builder: (context) => AddressDialog(
+                      title: 'Select Native Place',
+                      addressType: AddressType.native,
+                      selectedValue: _nativePlaceController.value.text,
+                    ),
                   ).then((value) {
                     if (value != null) {
                       setState(() {

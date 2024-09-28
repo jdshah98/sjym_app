@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../utils/assets.dart';
 
+import '../utils/assets.dart';
 import '../utils/helper.dart';
 
 class ThumbnailImage extends StatelessWidget {

@@ -1,5 +1,7 @@
 import 'package:get_storage/get_storage.dart';
+
 import '../models/address_statistics.dart';
+import '../models/address_type.dart';
 import '../models/advertisement.dart';
 import '../models/committee_type.dart';
 import '../models/member.dart';
@@ -59,7 +61,7 @@ class CacheProvider {
   AddressStatistics? getAreaStatistics() {
     final Map<String, dynamic>? cachedValue = _inMemory.read<Map<String, dynamic>>(Keys.areaStatistics);
     if (cachedValue != null) {
-      return AddressStatistics.fromMap(cachedValue);
+      return AddressStatistics.fromMap(AddressType.area, cachedValue);
     }
     return null;
   }
@@ -67,7 +69,7 @@ class CacheProvider {
   AddressStatistics? getNativePlaceStatistics() {
     final Map<String, dynamic>? cachedValue = _inMemory.read<Map<String, dynamic>>(Keys.nativePlaceStatistics);
     if (cachedValue != null) {
-      return AddressStatistics.fromMap(cachedValue);
+      return AddressStatistics.fromMap(AddressType.native, cachedValue);
     }
     return null;
   }

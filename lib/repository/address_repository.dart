@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../models/address_type.dart';
 import '../models/address_statistics.dart';
 
 class AddressRepository {
@@ -18,7 +19,7 @@ class AddressRepository {
     if (!areaSnapshot.exists) {
       return null;
     }
-    return AddressStatistics.fromMap(areaSnapshot.data());
+    return AddressStatistics.fromMap(AddressType.area, areaSnapshot.data());
   }
 
   Future<AddressStatistics?> fetchNativePlaceStatistics() async {
@@ -27,6 +28,6 @@ class AddressRepository {
     if (!nativePlaceSnapshot.exists) {
       return null;
     }
-    return AddressStatistics.fromMap(nativePlaceSnapshot.data());
+    return AddressStatistics.fromMap(AddressType.native, nativePlaceSnapshot.data());
   }
 }

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../models/member.dart';
 import '../provider/cache_provider.dart';
+import '../utils/app_colors.dart';
+import '../utils/assets.dart';
+import '../utils/constants.dart';
+import '../widgets/thumbnail_image.dart';
 import 'about_screen.dart';
 import 'address_book_screen.dart';
 import 'admin_panel.dart';
@@ -15,10 +20,6 @@ import 'matrimony_screen.dart';
 import 'news_screen.dart';
 import 'profile_screen.dart';
 import 'samaj_info_screen.dart';
-import '../utils/app_colors.dart';
-import '../utils/assets.dart';
-import '../utils/constants.dart';
-import '../widgets/thumbnail_image.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

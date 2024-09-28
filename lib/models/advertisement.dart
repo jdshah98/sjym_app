@@ -1,6 +1,6 @@
+import '../utils/keys.dart';
 import 'advertisement_info.dart';
 import 'entity.dart';
-import '../utils/keys.dart';
 
 class Advertisement extends Entity {
   AdvertisementInfo welcomeAdvertisement;

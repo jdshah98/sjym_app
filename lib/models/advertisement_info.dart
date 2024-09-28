@@ -1,6 +1,6 @@
-import 'entity.dart';
 import '../utils/helper.dart';
 import '../utils/keys.dart';
+import 'entity.dart';
 
 class AdvertisementInfo extends Entity {
   String filepath;
