@@ -124,7 +124,7 @@ class MemberService {
     } catch (err) {
       log(err.toString(), error: err, name: runtimeType.toString());
       debugPrint(err.toString());
-      return ApiResponse(isError: true, message: err.toString());
+      return ApiResponse(isError: true, message: 'Failed to Save Member!! Please try again later!!');
     }
   }
 

@@ -11,17 +11,15 @@ class Member extends Entity {
   String username;
   String password;
   bool isAdmin;
-  String area;
-  String nativePlace;
   String gender;
   bool isMarried;
   bool showInMatrimony;
   String committeeType;
   String bloodGroup;
-  Name name;
-  Profile profile;
   int familyOrder;
   int? lastUpdated;
+  Name name;
+  Profile profile;
 
   Member({
     this.uid = '',
@@ -29,8 +27,6 @@ class Member extends Entity {
     this.username = '',
     this.password = '',
     this.isAdmin = false,
-    this.area = '',
-    this.nativePlace = '',
     this.gender = '',
     this.isMarried = false,
     this.showInMatrimony = false,
@@ -45,8 +41,6 @@ class Member extends Entity {
   String getCommitteeDesignation(CommitteeType committeeType) =>
       committeeType == CommitteeType.main ? profile.mainCommitteeDesignation : profile.yuvaCommitteeDesignation;
 
-  String getAddress() => profile.address.isNotEmpty ? profile.address : 'NA';
-
   bool isMainMember() => uid == familyId;
 
   bool canLogin() => username.isNotEmpty && password.isNotEmpty;
@@ -59,17 +53,15 @@ class Member extends Entity {
       member.username = Helper.getString(map, Keys.username);
       member.password = Helper.getString(map, Keys.password);
       member.isAdmin = Helper.getBool(map, Keys.isAdmin);
-      member.area = Helper.getString(map, Keys.area);
-      member.nativePlace = Helper.getString(map, Keys.nativePlace);
       member.gender = Helper.getString(map, Keys.gender);
       member.isMarried = Helper.getBool(map, Keys.isMarried);
       member.showInMatrimony = Helper.getBool(map, Keys.showInMatrimony);
       member.committeeType = Helper.getString(map, Keys.committeeType);
       member.bloodGroup = Helper.getString(map, Keys.bloodGroup);
+      member.familyOrder = Helper.getInt(map, Keys.familyOrder) ?? 999;
       member.name = Name.fromMap(map[Keys.name]);
       member.profile = Profile.fromMap(map[Keys.profile]);
       member.lastUpdated = Helper.getInt(map, Keys.lastUpdated);
-      member.familyOrder = Helper.getInt(map, Keys.familyOrder) ?? 999;
     }
     return member;
   }
@@ -81,17 +73,15 @@ class Member extends Entity {
         Keys.username: username,
         Keys.password: password,
         Keys.isAdmin: isAdmin,
-        Keys.area: area,
-        Keys.nativePlace: nativePlace,
         Keys.gender: gender,
         Keys.isMarried: isMarried,
         Keys.showInMatrimony: showInMatrimony,
         Keys.committeeType: committeeType,
         Keys.bloodGroup: bloodGroup,
+        Keys.familyOrder: familyOrder,
         Keys.name: name.toMap(),
         Keys.profile: profile.toMap(),
         Keys.lastUpdated: lastUpdated,
-        Keys.familyOrder: familyOrder,
       };
 
   @override

@@ -6,7 +6,6 @@ class Keys {
 
   /// Profile
   static const String mobileNumber = 'mobile_number';
-  static const String address = 'address';
   static const String thumbnail = 'thumbnail';
   static const String profilePic = 'profile_pic';
   static const String mainCommitteeDesignation = 'main_committee_designation';
@@ -20,12 +19,9 @@ class Keys {
 
   /// Member
   static const String uid = 'uid';
-  static const String familyId = 'family_id';
   static const String username = 'username';
   static const String password = 'password';
   static const String isAdmin = 'is_admin';
-  static const String area = 'area';
-  static const String nativePlace = 'native_place';
   static const String gender = 'gender';
   static const String isMarried = 'is_married';
   static const String showInMatrimony = 'show_in_matrimony';
@@ -35,6 +31,12 @@ class Keys {
   static const String profile = 'profile';
   static const String lastUpdated = 'last_updated';
   static const String familyOrder = 'family_order';
+
+  /// Family
+  static const String familyId = 'id';
+  static const String address = 'address';
+  static const String area = 'area';
+  static const String nativePlace = 'native_place';
 
   /// Advertisement
   static const String welcomeAdvertisement = 'welcome_ad';

@@ -9,7 +9,7 @@ import '../utils/constants.dart';
 import '../widgets/thumbnail_image.dart';
 import 'about_screen.dart';
 import 'address_book_screen.dart';
-import 'admin_panel.dart';
+import 'admin_panel_screen.dart';
 import 'blood_bank_screen.dart';
 import 'committee_screen.dart';
 import 'contact_us_screen.dart';
@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 case 2:
                   {
-                    Get.to(() => const AdminPanel());
+                    Get.to(() => const AdminPanelScreen());
                     break;
                   }
                 case 3:

@@ -30,6 +30,7 @@ class AddFamilyMember extends StatefulWidget {
 
 class _AddFamilyMemberState extends State<AddFamilyMember> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _middleNameController = TextEditingController();
   final TextEditingController _lastnameController = TextEditingController();
@@ -399,8 +400,6 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
 
     final Member familyMember = Member(
       familyId: loggedInMember.familyId,
-      area: loggedInMember.area,
-      nativePlace: loggedInMember.nativePlace,
       bloodGroup: _bloodGroupController.value.text.trim(),
       gender: _gender,
       isMarried: _isMarried,
@@ -414,7 +413,6 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
         profilePic: _imagePickerResponse?.filepath ?? '',
         thumbnail: _imagePickerResponse?.thumbnail ?? '',
         mobileNumber: _mobileNumberController.value.text.trim(),
-        address: loggedInMember.profile.address,
         email: _emailController.value.text.trim(),
         education: _educationController.value.text.trim(),
         occupation: _occupationController.value.text.trim(),
@@ -426,53 +424,54 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
     );
 
     try {
-      ApiResponse<Member> result = await MemberService().saveMember(familyMember);
+      if (_imagePickerResponse != null &&
+          _imagePickerResponse?.localFile != null &&
+          _imagePickerResponse?.filepath != null) {
+        // Upload Profile Image
+        ApiResponse<void> profileImageResult = await MemberService().setProfileImageUrl(
+          _imagePickerResponse!.localFile!,
+          _imagePickerResponse!.filepath!,
+        );
 
-      if (!result.isError) {
-        final List<Member> familyMembers = CacheProvider().getFamilyMembers(widget.familyId);
-        familyMembers.add(result.data!);
-        CacheProvider().setFamilyMembers(widget.familyId, familyMembers);
+        if (profileImageResult.isError) {
+          familyMember.profile.profilePic = '';
+          familyMember.profile.thumbnail = '';
+        }
 
-        if (_imagePickerResponse != null &&
-            _imagePickerResponse?.localFile != null &&
-            _imagePickerResponse?.filepath != null) {
-          ApiResponse<void> result = await MemberService().setProfileImageUrl(
-            _imagePickerResponse!.localFile!,
-            _imagePickerResponse!.filepath!,
-          );
-          if (result.isError && mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text("Failed to Update Profile Image!! Please try again later!!"),
-              backgroundColor: Colors.red,
-              duration: Duration(milliseconds: 1000),
+        ApiResponse<Member> response = await MemberService().saveMember(familyMember);
+
+        if (!response.isError) {
+          final List<Member> familyMembers = CacheProvider().getFamilyMembers(widget.familyId);
+          familyMembers.add(response.data!);
+          CacheProvider().setFamilyMembers(widget.familyId, familyMembers);
+
+          if (mounted) {
+            // Close Dialog
+            Get.back();
+
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(response.message),
+              backgroundColor: Colors.green,
+              duration: const Duration(milliseconds: 2000),
             ));
 
-            await Future.delayed(const Duration(milliseconds: 1000));
+            // Go Back
+            Future.delayed(
+              const Duration(milliseconds: 2000),
+              () => Get.back(result: 'SUCCESS'),
+            );
           }
-        }
+        } else {
+          if (mounted) {
+            // Close Dialog
+            Get.back();
 
-        // Close Dialog
-        Get.back();
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text("Member Added Successfully"),
-            backgroundColor: Colors.green,
-            duration: Duration(milliseconds: 2000),
-          ));
-
-          // Go Back
-          Future.delayed(
-            const Duration(milliseconds: 2000),
-            () => Get.back(result: 'SUCCESS'),
-          );
-        }
-      } else {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Failed to Save Member!! Please try again later!!'),
-            backgroundColor: Colors.red,
-            duration: Duration(milliseconds: 2000),
-          ));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(response.message),
+              backgroundColor: Colors.red,
+              duration: const Duration(milliseconds: 2000),
+            ));
+          }
         }
       }
     } catch (err) {
@@ -480,6 +479,9 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
       debugPrint('Exception: ${err.toString()}');
 
       if (mounted) {
+        // Close Dialog
+        Get.back();
+
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Something went wrong!! Please try again later!!'),
           backgroundColor: Colors.red,

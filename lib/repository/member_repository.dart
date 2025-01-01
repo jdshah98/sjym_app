@@ -105,6 +105,19 @@ class MemberRepository {
 
   Future<void> removeById(String uid) async => await _ref.doc(uid).delete();
 
+  Future<bool> existsByUsername(String username) async {
+    if (username.isEmpty) {
+      return false;
+    }
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await _ref
+        .where(
+          Keys.username,
+          isEqualTo: username,
+        )
+        .get();
+    return querySnapshot.size > 0 ? querySnapshot.docs.first.exists : false;
+  }
+
   Future<Member> save(Member member) async {
     if (member.uid.trim().isEmpty) {
       DocumentReference<Map<String, dynamic>> memberRef = _ref.doc();

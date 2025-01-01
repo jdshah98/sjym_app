@@ -4,7 +4,6 @@ import 'entity.dart';
 
 class Profile extends Entity {
   String mobileNumber;
-  String address;
   String thumbnail;
   String profilePic;
   String mainCommitteeDesignation;
@@ -18,7 +17,6 @@ class Profile extends Entity {
 
   Profile({
     this.mobileNumber = '',
-    this.address = '',
     this.thumbnail = '',
     this.profilePic = '',
     this.mainCommitteeDesignation = '',
@@ -37,7 +35,6 @@ class Profile extends Entity {
     final Profile profile = Profile();
     if (map != null) {
       profile.mobileNumber = Helper.getString(map, Keys.mobileNumber);
-      profile.address = Helper.getString(map, Keys.address);
       profile.thumbnail = Helper.getString(map, Keys.thumbnail);
       profile.profilePic = Helper.getString(map, Keys.profilePic);
       profile.mainCommitteeDesignation = Helper.getString(map, Keys.mainCommitteeDesignation);
@@ -54,7 +51,6 @@ class Profile extends Entity {
 
   @override
   Map<String, dynamic> toMap() => {
-        Keys.address: address,
         Keys.thumbnail: thumbnail,
         Keys.profilePic: profilePic,
         Keys.mainCommitteeDesignation: mainCommitteeDesignation,
